@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import domtoimage from "dom-to-image-more";
-import signature from '../assets/signatue2.png'
-import background from '../assets/LORbg.png'
+import signature from '@/assets/signatue2.png'
+import background from '@/assets/LORbg.png'
 
 const LOR = () => {
   const internName = localStorage.getItem("internName") || "Intern's Name";

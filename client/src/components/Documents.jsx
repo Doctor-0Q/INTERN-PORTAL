@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import offerLetterImg from '../assets/OfferLetterImg.jpg';
-import lorImg from '../assets/LOR.jpg'
-import certificateImg from '../assets/certificate.png'
+import offerLetterImg from '@/assets/OfferLetterImg.jpg';
+import lorImg from '@/assets/LOR.jpg'
+import certificateImg from '@/assets/certificate.png'
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from "../../config/config";

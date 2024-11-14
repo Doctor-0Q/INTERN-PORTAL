@@ -1,7 +1,7 @@
 import React from 'react';
-import iconleft from '../assets/iconleft.png'
-import iconmid from '../assets/iconmid.png'
-import iconright from '../assets/iconright.png'
+import iconleft from '@/assets/iconleft.png'
+import iconmid from '@/assets/iconmid.png'
+import iconright from '@/assets/iconright.png'
 
 const Card = ({ iconSrc, title, description, items, buttonText }) => {
   return (
