@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { API_URL } from "../../config/config";
 
 const Profile = () => {
   const internName=localStorage.getItem('internName');
@@ -62,7 +63,7 @@ const Profile = () => {
       
 
       // Update the intern data via the editIntern endpoint
-      const response = await axios.post(`http://localhost:8080/api/v1/editIntern/${internID}`, formData);
+      const response = await axios.post(`${API_URL}/api/v1/editIntern/${internID}`, formData);
 
       if (response.status !== 200) {
         toast.error("Failed to update details")

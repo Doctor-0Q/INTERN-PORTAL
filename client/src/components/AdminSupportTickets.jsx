@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import totalGraph from "@/assets/totalTickets.png";
 import solved from "@/assets/solved.png"
 import pending from "@/assets/pending.png"
-import ticketprofile from "@/assets/ticketprofile.png"
 import chatBubble from "@/assets/chat_bubble.png"
+import { API_URL } from "../../config/config";
 
 const AdminSupportTickets = () => {
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ const AdminSupportTickets = () => {
   useEffect(() => {
     const fetchTickets = async () => {
         try {
-          const response = await fetch("http://localhost:8080/api/v1/supporttickets"); // Assuming the JSON is served from the public folder
+          const response = await fetch(`${API_URL}/api/v1/supporttickets`); // Assuming the JSON is served from the public folder
           const data = await response.json();
           console.log('API Response:', data);
           setTickets(data.data || []);

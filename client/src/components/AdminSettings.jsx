@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import maintenanceImg from '../assets/Maintenance.png'
 import toast from 'react-hot-toast'
 import axios from 'axios'
+import { API_URL } from "../../config/config";
 
 const Settings = () => {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -13,7 +14,7 @@ const Settings = () => {
     
     try {
       
-      const response= await axios.post(`http://localhost:8080/api/v1/changeAdminPassword/${username}`, {
+      const response= await axios.post(`${API_URL}/api/v1/changeAdminPassword/${username}`, {
         currentPassword:currentPassword,
         newPassword:newPassword
       })

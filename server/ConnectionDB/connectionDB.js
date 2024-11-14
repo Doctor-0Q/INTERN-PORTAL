@@ -1,8 +1,12 @@
 
 import mongoose from 'mongoose'
+require('dotenv').config();
+
+const MONGODB_URL = process.env.MONGODB_URL;
+
 const connectdb=async()=>{
     try{
-        await mongoose.connect("mongodb+srv://docqreaches:GTEvYCLd9v1SXaj0@cluster0.yqoz2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+        await mongoose.connect(MONGODB_URL)
         console.log("MongoDB connected")
     }
     catch(error){

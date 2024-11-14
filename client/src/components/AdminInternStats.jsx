@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import graph1 from "@/assets/graph1.png"
 import graph23 from "@/assets/graph23.png"
 import graph4 from "@/assets/graph4.png"
+import { API_URL } from "../../config/config";
 
 const AdminInternStats = () => {
     const [interns, setInterns] = useState([]);
@@ -16,7 +17,7 @@ const AdminInternStats = () => {
       useEffect(() => {
         const fetchInterns = async () => {
           try {
-            const response = await fetch('http://localhost:8080/api/v1/internList');
+            const response = await fetch(`${API_URL}/api/v1/internList`);
             const result = await response.json();
             if (result.success) {
               setInterns(result.data);
