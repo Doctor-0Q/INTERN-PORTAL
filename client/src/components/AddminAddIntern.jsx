@@ -2,6 +2,7 @@ import { Calendar, X, AlertCircle } from 'lucide-react';
 import React, { useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { API_URL } from '../../config/config';
 
 const AddminAddIntern = () => {
   const [formData, setFormData] = useState({
@@ -113,7 +114,7 @@ const AddminAddIntern = () => {
     if (isEmailValid && isPerformanceValid) {
       try {
 
-        const response = await axios.post('http://localhost:8080/api/v1/addIntern', formData);
+        const response = await axios.post(`${API_URL}/api/v1/addIntern`, formData);
         if (response.data.success) {
 
           toast.success("Intern added successfully")

@@ -9,6 +9,7 @@ import { MdOutlineInfo } from "react-icons/md";
 import { MdWifiCalling3 } from "react-icons/md";
 import { VscMail } from "react-icons/vsc";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { API_URL } from "../../config/config";
 
 
 const AdminMembersList = () => {
@@ -53,7 +54,7 @@ const AdminMembersList = () => {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/v1/member-list"); 
+        const response = await fetch(`${API_URL}/api/v1/member-list`); 
         const data = await response.json();
         setMembers(data.data);
         setLoading(false); // Data is loaded
@@ -128,7 +129,7 @@ const AdminMembersList = () => {
     if (isEmailValid) {
       try {
         
-        const response = await axios.post('http://localhost:8080/api/v1/member-list', formData);
+        const response = await axios.post(`${API_URL}/api/v1/member-list`, formData);
         console.log("Received data:", formData);
         console.log("Response:", response);
         if(response && response.data.success){
@@ -177,14 +178,14 @@ const AdminMembersList = () => {
   
     try {
       // First verify admin credentials
-      const loginResponse = await axios.post("http://localhost:8080/api/v1/adminLogin", {
+      const loginResponse = await axios.post(`${API_URL}/api/v1/adminLogin`, {
         username: adminCredentials.username,
         password: adminCredentials.password
       });
       
       if (loginResponse.data.success) {
         // If admin verification successful, proceed with deletion
-        const deleteResponse = await axios.delete("http://localhost:8080/api/v1/delete-members", {
+        const deleteResponse = await axios.delete(`${API_URL}/api/v1/delete-members`, {
           data: { 
             memberIds: selectedMembers,
             username: adminCredentials.username,

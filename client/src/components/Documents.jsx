@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import offerLetterImg from '../assets/offerLetterImg.jpg';
-import lorImg from '../assets/LOR.jpg'
-import certificateImg from '../assets/certificate.png'
+import offerLetterImg from '@/assets/OfferLetterImg.jpg';
+import lorImg from '@/assets/LOR.jpg'
+import certificateImg from '@/assets/certificate.png'
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { API_URL } from "../../config/config";
 
 const Documents = () => {
     const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Documents = () => {
 
         const fetchDownloadPermissions = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/api/v1/interns/${internID}`);
+                const response = await axios.get(`${API_URL}/api/v1/interns/${internID}`);
                 
                 if (response.data.canDownloadCertificate === "true") {
                     setDownloadCertificate(true);

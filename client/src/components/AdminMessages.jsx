@@ -3,7 +3,7 @@ import SupportTicket from './SupportTicket';
 import Pagination from './Pagination';
 import TicketDetails from './TicketDetails';
 import { useLocation } from 'react-router-dom';
-
+import { API_URL } from "../../config/config";
 
 const AdminMessages = () => {
   const location = useLocation();
@@ -21,7 +21,7 @@ const AdminMessages = () => {
 
   useEffect(() => {
     // Fetch tickets from the backend API
-    fetch('http://localhost:8080/api/v1/tickets')  // Adjust this if you need to specify the full URL or add a port number
+    fetch(`${API_URL}/api/v1/tickets`)  // Adjust this if you need to specify the full URL or add a port number
       .then((response) => response.json())
       .then((data) => setTickets(data.tickets))
       .catch((error) => console.error("Error fetching tickets:", error));

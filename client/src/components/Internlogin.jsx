@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from "../../config/config";
 
 const Login = () => {
   const [internID, setInternID] = useState('');
@@ -13,7 +14,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response=await axios.post('http://localhost:8080/api/v1/internLogin',{
+      const response=await axios.post(`${API_URL}/api/v1/internLogin`,{
         internID:internID,
         password:password
       });

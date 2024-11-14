@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import domtoimage from "dom-to-image-more";
-import logo from '../assets/Logo.png'
-import signature from '../assets/signature.png'
+import logo from '@/assets/Logo.png'
+import signature from '@/assets/signature.png'
 import { useLocation } from "react-router-dom";
 
 const Certificate = () => {

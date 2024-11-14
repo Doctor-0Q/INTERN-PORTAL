@@ -10,7 +10,12 @@ const port = 8080;
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:5173', 
+    origin: [
+        "https://docqinternportal.live",
+        "https://www.docqinternportal.live",
+        "intern-portal-six.vercel.app",
+        "http://localhost:5173" // Keep this for local development
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
   }));

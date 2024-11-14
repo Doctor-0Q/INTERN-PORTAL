@@ -5,6 +5,7 @@ import filtericon from "@/assets/filtericon.png";
 import questionicon from "@/assets/questionicon.png";
 import { useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
+import { API_URL } from "../../config/config";
 
 
 const InternsDashboard = () => {
@@ -21,7 +22,7 @@ const InternsDashboard = () => {
   useEffect(() => {
     const fetchInterns = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/v1/internList");
+        const response = await fetch(`${API_URL}/api/v1/internList`);
         const result = await response.json();
         if (result.success) {
           setInterns(result.data);

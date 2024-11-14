@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png";
+import logo from "@/assets/Logo.png";
 import { FaSearch, FaEnvelope, FaBell, FaBars } from "react-icons/fa";
-import logoutIcon from "../assets/logout-icon.png";
+import logoutIcon from "@/assets/logout-icon.png";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

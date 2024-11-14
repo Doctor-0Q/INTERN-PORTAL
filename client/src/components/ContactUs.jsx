@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import documentImg from '../assets/document.png'
+import documentImg from '@/assets/document.png'
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { API_URL } from "../../config/config";
 
 const ContactUs = () => {
   const gender=localStorage.getItem('gender')
@@ -30,7 +31,7 @@ const ContactUs = () => {
     e.preventDefault();
     try {
       // Send data to the backend using axios
-      const response = await axios.post('http://localhost:8080/api/v1/createTicket', formData);
+      const response = await axios.post(`${API_URL}/api/v1/createTicket`, formData);
       
       // Display success message from the server response
       setResponseMessage(response.data.message);

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import validateImg from '../assets/validateImg.png'
+import validateImg from '@/assets/validateImg.png'
 import CertificateValidationMessage from './CertificateValidationMessage';
 import axios from 'axios';
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from "../../config/config";
 
 
 const Validate = () => {
@@ -17,7 +18,7 @@ const Validate = () => {
       toast.error("Please enter certificate ID");
     } else {
       try {
-        const response = await axios.post("http://localhost:8080/api/v1/validateCertificate", {
+        const response = await axios.post(`${API_URL}/api/v1/validateCertificate`, {
           id: certificateID,
         },{ withCredentials: true });
         if (response.data.success) {

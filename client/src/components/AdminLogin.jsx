@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import loginBackground from "@/assets/adminLoginBackground.png";
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { API_URL } from "../../config/config";
 
 const AdminLogin = () => {
   const [username, setUsername] = useState('');
@@ -22,7 +23,7 @@ const AdminLogin = () => {
     // Clear any previous error message
     setErrorMessage('');
     try {
-      const response=await axios.post('http://localhost:8080/api/v1/adminLogin',{
+      const response=await axios.post(`${API_URL}/api/v1/adminLogin`,{
         username:username,
         password:password
       })
