@@ -70,11 +70,11 @@ const ReviewsSection = () => {
       
       <div className="mb-4 md:hidden md:translate-y-[36vw] -translate-x-[3vw]">
         <h2 className="text-4xl text-gray-800 font-bold">Reviews</h2>
-        <div className="flex space-x-1 mt-1">
+{/*         <div className="flex space-x-1 mt-1">
           {Array.from({ length: 5 }).map((_, index) => (
             <span key={index} className="text-black"><img src={star} alt="" className='md:h-[3vw]'/></span>
           ))}
-        </div>
+        </div> */}
       </div>
 
       
