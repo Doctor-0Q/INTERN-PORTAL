@@ -4,7 +4,6 @@ const InternSchema = new mongoose.Schema({
   internID: {
     type: String,
     required: true,
-    unique: true
   },
   status: {
     type: String,

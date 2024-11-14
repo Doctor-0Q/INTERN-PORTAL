@@ -4,7 +4,6 @@ const internSchema = new mongoose.Schema({
     internID: {
         type: String,
         required: true,
-        unique: true
     },
     password:{
         type:String,
@@ -27,4 +26,4 @@ const internSchema = new mongoose.Schema({
     performance: String,
 }, { timestamps: true });
 
-export const Intern = mongoose.model('interns', internSchema, 'interns');
+export const Intern = mongoose.model('interns', internSchema);
