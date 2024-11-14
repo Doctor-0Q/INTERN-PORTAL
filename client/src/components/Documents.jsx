@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import offerLetterImg from '@/assets/OfferLetterImg.jpg';
 import lorImg from '@/assets/LOR.jpg'
 import certificateImg from '@/assets/certificate.png'
+import PerformanceLoginMessage from "./DocumentLoginMessage";
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from "../../config/config";
@@ -9,6 +10,7 @@ import { API_URL } from "../../config/config";
 const Documents = () => {
     const navigate = useNavigate();
     
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [offerLetterPath, setOfferLetterPath] = useState("");
     const [role, setRole] = useState(""); // Use state for role
     const [internID, setInternID] = useState(null);
@@ -16,6 +18,19 @@ const Documents = () => {
     const [downloadLOR, setDownloadLOR] = useState(false);
 
     useEffect(() => {
+
+    const handleStorageChange = () => {
+    const internId = localStorage.getItem('internID');
+    console.log('Fetching data for intern:', internId);
+    setIsLoggedIn(!!internId);
+    };
+
+    // Initial check
+    const internId = localStorage.getItem('internID');
+    setIsLoggedIn(!!internId);
+
+    // Listen for changes
+    window.addEventListener('storage', handleStorageChange);
         console.log(localStorage.getItem('role'));
         // Retrieve role and intern ID from localStorage
         const storedRole = localStorage.getItem('role').trim().toLowerCase();
@@ -29,6 +44,7 @@ const Documents = () => {
             setInternID(internID);
         }
 
+        if (internId) {
         const fetchDownloadPermissions = async () => {
             try {
                 const response = await axios.get(`${API_URL}/api/v1/interns/${internID}`);
@@ -50,7 +66,7 @@ const Documents = () => {
         };
 
         fetchDownloadPermissions();
-
+        }
         
         if (storedRole === "web developer") {
             console.log("Role:", storedRole);
@@ -65,6 +81,10 @@ const Documents = () => {
             console.log("The code isnt working")
         }
     }, []);
+
+    if (!isLoggedIn) {
+    return <DocumentLoginMessage />;
+  }
 
   return (
     <div className='w-screen text-center flex flex-col justify-center items-center p-4'>
