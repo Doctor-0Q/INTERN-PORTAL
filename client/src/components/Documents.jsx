@@ -31,20 +31,29 @@ const Documents = () => {
 
     // Listen for changes
     window.addEventListener('storage', handleStorageChange);
-        console.log(localStorage.getItem('role'));
-        // Retrieve role and intern ID from localStorage
-        const storedRole = localStorage.getItem('role').trim().toLowerCase();
-        const internID = localStorage.getItem('internID');
-
-        if (storedRole) {
-            setRole(storedRole); 
-        }
 
         if (internID) {
             setInternID(internID);
         }
 
-        if (internId) {
+    if (internId) {
+            const storedRole = localStorage.getItem('role');
+            if (storedRole) {
+                setRole(storedRole.trim().toLowerCase()); 
+                 if (storedRole === "web developer") {
+                    console.log("Role:", storedRole);
+                    setOfferLetterPath("/view-OfferLetter-Web-Developer");
+                } else if (storedRole === "app developer") {
+                    console.log("Role:", storedRole);
+                    setOfferLetterPath("/view-OfferLetter");
+                } else if (storedRole === "python developer") {
+                    console.log("Role:", storedRole);
+                    setOfferLetterPath("/view-OfferLetter-Python-Developer");
+                }else{
+                    console.log("The code isnt working")
+                }
+            }
+
         const fetchDownloadPermissions = async () => {
             try {
                 const response = await axios.get(`${API_URL}/api/v1/interns/${internID}`);
@@ -67,20 +76,11 @@ const Documents = () => {
 
         fetchDownloadPermissions();
         }
-        
-        if (storedRole === "web developer") {
-            console.log("Role:", storedRole);
-            setOfferLetterPath("/view-OfferLetter-Web-Developer");
-        } else if (storedRole === "app developer") {
-            console.log("Role:", storedRole);
-            setOfferLetterPath("/view-OfferLetter");
-        } else if (storedRole === "python developer") {
-            console.log("Role:", storedRole);
-            setOfferLetterPath("/view-OfferLetter-Python-Developer");
-        }else{
-            console.log("The code isnt working")
-        }
-    }, []);
+
+        return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+}, []);
 
     if (!isLoggedIn) {
     return <DocumentLoginMessage />;
