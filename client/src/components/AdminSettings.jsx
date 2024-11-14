@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import maintenanceImg from '../assets/Maintenance.png'
+import maintenanceImg from '@/assets/Maintenance.png'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 import { API_URL } from "../../config/config";

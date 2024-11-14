@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import domtoimage from "dom-to-image-more";
 import { useLocation } from "react-router-dom";
-import signature from '../assets/signatue2.png'
+import signature from '@/assets/signatue2.png'
 
 const OfferLetterWebDeveloper = () => {
   const internName = localStorage.getItem("internName");

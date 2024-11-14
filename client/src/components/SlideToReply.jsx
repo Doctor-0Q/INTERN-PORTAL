@@ -1,6 +1,7 @@
 import { FaArrowRight } from "react-icons/fa6";
 import { IoMdSend } from "react-icons/io";
 import axios from 'axios'
+import { API_URL } from "../../config/config";
 
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -18,7 +19,7 @@ const SlideToReply = ({ ticket }) => {
 
 
     try {
-      const response=await axios.post(`http://localhost:8080/api/v1/ticketResolve/${ticket}`,{
+      const response=await axios.post(`${API_URL}/api/v1/ticketResolve/${ticket}`,{
         response:adminReply
       })
   

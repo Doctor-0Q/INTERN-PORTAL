@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import validateImg from '../assets/validateImg.png'
+import validateImg from '@/assets/validateImg.png'
 import CertificateValidationMessage from './CertificateValidationMessage';
 import axios from 'axios';
 import toast from 'react-hot-toast'
