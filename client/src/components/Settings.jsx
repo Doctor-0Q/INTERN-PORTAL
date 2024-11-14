@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ToggleCheckbox from '../ToggleCheckbox';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { API_URL } from "../../config/config";
 
 const Settings = () => {
 
@@ -55,7 +56,7 @@ const Settings = () => {
     }
     
     try {
-      const response =await axios.post(`http://localhost:8080/api/v1/changePassword/${internID}`,passwordData);
+      const response =await axios.post(`${API_URL}/api/v1/changePassword/${internID}`,passwordData);
 
       if(response.data.success){
           toast.success("Password changed successfully")

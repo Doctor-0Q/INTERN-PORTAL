@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Search, Download, AlertCircle } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { API_URL } from '../../config/config';
 
 
 const EditIntern = () => {
@@ -46,7 +47,7 @@ const EditIntern = () => {
       }
 
       // Use Axios to fetch intern data
-      const response = await axios.get(`http://localhost:8080/api/v1/interns/${internID}`);
+      const response = await axios.get(`${API_URL}/api/v1/interns/${internID}`);
 
       // Update form data with the received intern data
       setFormData({
@@ -142,7 +143,7 @@ const EditIntern = () => {
 
 
       // Update the intern data via the editIntern endpoint
-      const response = await axios.post(`http://localhost:8080/api/v1/editIntern/${internID}`, formData);
+      const response = await axios.post(`${API_URL}/api/v1/editIntern/${internID}`, formData);
 
       if (response.status !== 200) {
         toast.error("Failed to update details")

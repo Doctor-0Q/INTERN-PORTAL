@@ -7,7 +7,7 @@ import GradientLineChart from "./GradientLineChart";
 import PerformanceLoginMessage from "./PerformanceLoginMessage";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-
+import { API_URL } from "../../config/config";
 
 const Performance = () => {
   const navigate=useNavigate();
@@ -36,7 +36,7 @@ const Performance = () => {
     if (internId) {
       const fetchData = async () => {
         try {
-          const response = await axios.get(`http://localhost:8080/api/v1/interns/${internId}/performance`);
+          const response = await axios.get(`${API_URL}/api/v1/interns/${internId}/performance`);
           console.log('API Response:', response.data);
           setPerformanceData(response.data);
         } catch (error) {
