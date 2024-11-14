@@ -6,19 +6,19 @@ import adminRoute from './Routes/adminRoute.js';
 import InternRoute from './Routes/intern.js';
 import SupportTicket from './Routes/createTicket.js'
 
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
+
 const port = 8080;
 const app = express();
 
 app.use(cors({
-    origin: [
-        "https://docqinternportal.live",
-        "https://www.docqinternportal.live",
-        "intern-portal-six.vercel.app",
-        "http://localhost:5173" // Keep this for local development
-    ],
+    origin: allowedOrigins,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization']
   }));
+
+app.options('*', cors())
 
 app.use(express.json());
 connectdb('test');
