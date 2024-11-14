@@ -10,5 +10,5 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'), // Set up the alias
     },
   },
-  base: '/Intern-portal/',  // This should match your GitHub repository name
+  base: '/', 
 });
