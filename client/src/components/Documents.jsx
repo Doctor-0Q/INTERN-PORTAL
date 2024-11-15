@@ -32,7 +32,7 @@ const Documents = () => {
     // Listen for changes
     window.addEventListener('storage', handleStorageChange);
 
-        if (internID) {
+        if (internId) {
             setInternID(internID);
         }
 
