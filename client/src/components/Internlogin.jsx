@@ -26,6 +26,7 @@ const Login = () => {
         localStorage.setItem('certificateId',response.data.certificateId);
         localStorage.setItem('dateOfJoining',response.data.dateOfJoining);
         localStorage.setItem('role',response.data.role);
+        localStorage.setItem('role',response.data.role);
         toast.success("Login success")
         navigate(`../`);
       }

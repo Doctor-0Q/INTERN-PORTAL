@@ -5,6 +5,8 @@ import background from '@/assets/LORbg.png'
 
 const LOR = () => {
   const internName = localStorage.getItem("internName") || "Intern's Name";
+  const projects = localStorage.getItem("projects") || "";
+  const department = localStorage.getItem("role") || "Development";
   const currentDate = new Date().toLocaleDateString();
 
   useEffect(() => {
@@ -72,12 +74,12 @@ const LOR = () => {
         <p className="text-base mb-4 border-white">
           I am writing to recommend <span className="font-bold border-white">{internName}</span> for [Position or opportunity]
           During their time with DOC-Q
-          as an intern in our department [Department name], <span className="font-bold border-white">{internName}</span> has demonstrated exceptional skills, dedication, 
+          as an intern in our department {department}, <span className="font-bold border-white">{internName}</span> has demonstrated exceptional skills, dedication, 
           and a strong commitment to excellence.
         </p>
 
         <p className="text-base mb-4 border-white">
-          Their contributions have significantly impacted our projects, such as <span className="font-bold border-white">[Project Example]</span>. 
+          Their contributions have significantly impacted our projects, such as <span className="font-bold border-white">{projects}</span>. 
           Beyond their technical skills, <span className="font-bold border-white">{internName}</span> has proven to be a proactive team player, 
           collaborating effectively with colleagues and offering creative solutions to challenges.
         </p>
