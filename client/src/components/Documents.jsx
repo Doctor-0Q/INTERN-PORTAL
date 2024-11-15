@@ -33,10 +33,11 @@ const Documents = () => {
     window.addEventListener('storage', handleStorageChange);
 
         if (internId) {
-            setInternID(internID);
+            setInternID(internId);
         }
 
     if (internId) {
+        setInternID(internId);
             const storedRole = localStorage.getItem('role');
             if (storedRole) {
                 setRole(storedRole.trim().toLowerCase()); 
