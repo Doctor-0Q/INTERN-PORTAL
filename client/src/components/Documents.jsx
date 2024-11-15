@@ -121,10 +121,10 @@ in one place for quick reference and verification."
                 </div>
                 </div>
                 <div className='mt-[4%] flex flex-row gap-[30%] ml-[4%]'>
-                    <Link to={`./${offerLetterPath}`} className='bg-transparent text-lg text-gray-800 font-semibold text-lg'>
+                    <Link to={`/${offerLetterPath}`} className='bg-transparent text-lg text-gray-800 font-semibold text-lg'>
                         View
                     </Link>
-                    <Link to={`./${offerLetterPath}?download=true`}  
+                    <Link to={`/${offerLetterPath}?download=true`}  
                     target='_blank'
                     className='bg-white border border-black p-2 rounded-lg text-lg text-gray-800 font-semibold text-lg'>
                         Download
