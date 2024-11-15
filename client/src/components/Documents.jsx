@@ -43,13 +43,13 @@ const Documents = () => {
                 setRole(storedRole.trim().toLowerCase()); 
                  if (storedRole === "web developer") {
                     console.log("Role:", storedRole);
-                    setOfferLetterPath("/view-OfferLetter-Web-Developer");
+                    setOfferLetterPath("view-OfferLetter-Web-Developer");
                 } else if (storedRole === "app developer") {
                     console.log("Role:", storedRole);
-                    setOfferLetterPath("/view-OfferLetter");
+                    setOfferLetterPath("view-OfferLetter");
                 } else if (storedRole === "python developer") {
                     console.log("Role:", storedRole);
-                    setOfferLetterPath("/view-OfferLetter-Python-Developer");
+                    setOfferLetterPath("view-OfferLetter-Python-Developer");
                 }else{
                     console.log("The code isnt working")
                 }
@@ -121,10 +121,10 @@ in one place for quick reference and verification."
                 </div>
                 </div>
                 <div className='mt-[4%] flex flex-row gap-[30%] ml-[4%]'>
-                    <Link to={offerLetterPath} className='bg-transparent text-lg text-gray-800 font-semibold text-lg'>
+                    <Link to={`/${offerLetterPath}`} className='bg-transparent text-lg text-gray-800 font-semibold text-lg'>
                         View
                     </Link>
-                    <Link to={`${offerLetterPath}?download=true`}  
+                    <Link to={`/${offerLetterPath}?download=true`}  
                     target='_blank'
                     className='bg-white border border-black p-2 rounded-lg text-lg text-gray-800 font-semibold text-lg'>
                         Download
