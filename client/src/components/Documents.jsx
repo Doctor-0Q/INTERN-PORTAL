@@ -57,7 +57,7 @@ const Documents = () => {
 
         const fetchDownloadPermissions = async () => {
             try {
-                const response = await axios.get(`${API_URL}/api/v1/interns/${internID}`);
+                const response = await axios.get(`${API_URL}/api/v1/interns/${internId}`);
                 
                 if (response.data.canDownloadCertificate === "true") {
                     setDownloadCertificate(true);
