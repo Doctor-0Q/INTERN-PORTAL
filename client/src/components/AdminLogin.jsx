@@ -27,7 +27,7 @@ const AdminLogin = () => {
         username:username,
         password:password
       })
-        if(response.data.success){
+        if(response?.data?.success){
           localStorage.setItem('admin',username)
           toast.success(response.data.message)
           localStorage.setItem('isAdmin', 'true');
@@ -38,7 +38,7 @@ const AdminLogin = () => {
         }
         
       } catch (error) {
-        toast.error(error.response.data.message)
+        toast.error(error?.response?.data?.message)
       }
     
   };
