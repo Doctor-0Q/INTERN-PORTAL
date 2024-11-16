@@ -79,7 +79,7 @@ const Certificate = () => {
 
 
         <p className="text-center my-1 text-sm border-white">
-          01 Puttenahall Gramatana, Puttenahall, V NAYAK NAGAR, Bangalore 560078
+          01 Puttenahall Gramatana, Puttenahall, VINAYAK NAGAR, Bangalore 560078
         </p>
 
         <p className="mt-[10%] border-white">
