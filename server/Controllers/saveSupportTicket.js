@@ -1,5 +1,6 @@
 import { Ticket } from "../Model/supportTicket.js";
 import { Counter } from "../Model/counter.js";
+import { sendEmail } from './emailService.js';
 
 export const createSupportTicket = async (req, res) => {
     try {
@@ -35,7 +36,11 @@ export const createSupportTicket = async (req, res) => {
     try {
       
       const {ticketID}=req.params;
-      const {response}=req.body;
+      const {response, email}=req.body;
+
+      if (!ticketID || !response) {
+        return res.status(400).json({ success: false, message: "Ticket ID and response are required." });
+      }
 
       const updateTicket=await Ticket.findOneAndUpdate(
         {ticketID:ticketID},
@@ -47,6 +52,29 @@ export const createSupportTicket = async (req, res) => {
 
       if(!updateTicket){
         return res.status(400).json({success:false,message:"There is some error while updating response"})
+      }
+
+      try {
+        const text = `Hello,
+
+This is response email regarding the issue from DOC-Q
+
+Your suppoort ticket ID is #${ticketID}
+
+Response:
+${response}
+
+Best regards,
+Your Team`;
+        await sendEmail(
+          email, // Recipient email from the request body
+          "Ticket Resolved",
+          text
+        );
+        console.log("Email sent successfully to", email);
+      } catch (emailError) {
+        console.error("Error sending email:", emailError.message);
+        return res.status(500).json({ success: false, message: "Failed to send email notification." });
       }
 
       return res.status(200).json({success:true,message:"Ticket resolved successfully"})
