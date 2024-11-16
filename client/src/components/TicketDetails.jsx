@@ -70,7 +70,7 @@ const TicketDetails = ({ ticket, selectTicket }) => {
       {/* Slide to Reply Section */}
       <div className='w-full flex justify-center items-center'>
 
-      <SlideToReply ticket={ticket.ticketID}/>
+      <SlideToReply ticket={ticket.ticketID} email={ticket.email}/>
       </div>
 
      
