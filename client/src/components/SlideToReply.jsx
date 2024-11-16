@@ -6,21 +6,25 @@ import { API_URL } from "../../config/config";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-const SlideToReply = ({ ticket }) => {
+const SlideToReply = ({ ticket, email }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState(0);
   const [adminReply,setAdminReply]=useState("")
   const [message, setMessage] = useState("Slide To Reply");
   const [showReplyBox, setShowReplyBox] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit=async(e)=>{
     e.preventDefault();
     console.log(ticket)
+    if (loading) return;
+    setLoading(true);
 
 
     try {
       const response=await axios.post(`${API_URL}/api/v1/ticketResolve/${ticket}`,{
-        response:adminReply
+        response:adminReply,
+        email:email
       })
   
       if(response.data.success){
@@ -30,7 +34,11 @@ const SlideToReply = ({ ticket }) => {
         toast.error("please try again")
       }
     } catch (error) {
-      toast.error(error.response.data.message)
+      const errorMessage =
+      error.response?.data?.message || "An unexpected error occurred";
+    toast.error(errorMessage);
+    } finally {
+      setLoading(false); // Reset loading state
     }
     
   }
