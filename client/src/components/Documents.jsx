@@ -43,13 +43,13 @@ const Documents = () => {
                 setRole(storedRole.trim().toLowerCase()); 
                  if (storedRole === "web developer") {
                     console.log("Role:", storedRole);
-                    setOfferLetterPath("view-OfferLetter-Web-Developer");
+                    setOfferLetterPath("/view-OfferLetter-Web-Developer");
                 } else if (storedRole === "app developer") {
                     console.log("Role:", storedRole);
-                    setOfferLetterPath("view-OfferLetter");
+                    setOfferLetterPath("/view-OfferLetter");
                 } else if (storedRole === "python developer") {
                     console.log("Role:", storedRole);
-                    setOfferLetterPath("view-OfferLetter-Python-Developer");
+                    setOfferLetterPath("/view-OfferLetter-Python-Developer");
                 }else{
                     console.log("The code isnt working")
                 }
