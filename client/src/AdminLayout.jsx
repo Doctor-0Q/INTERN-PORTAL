@@ -33,6 +33,7 @@ const AdminLayout = () => {
               <Route path="/dashboard" element={<AdminDashboard />} />
               <Route path="/Settings" element={<Settings />} />
               <Route path="/Messages" element={<AdminMessages />} />
+              <Route path="/Edit-Interns/:internId" element={<AdminEditIntern />} />
               <Route path="/Edit-Interns" element={<AdminEditIntern />} />
               <Route path="/Career" element={<AdminCareer />} />
             </>
