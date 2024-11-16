@@ -93,17 +93,37 @@ const Certificate = () => {
           his internship in <strong className="border-white">Development at DOC-Q</strong> starting from <strong className="border-white">6th February 2024</strong>.
         </p>
 
-        <p className="my-4 border-white" style={{ textIndent: '6rem' }}>
-  He has worked on a project titled 'DOC Q'. This project was aimed to build a healthcare management system (HMS)
-  for doctors and patients to ease their appointment scheduling, record-keeping, and the consultations. As part of
-  the project, he has developed the backend of the platform from scratch with his team.
-</p>
+        
 
-<p className="my-4 border-white" style={{ textIndent: '6rem' }}>
-  During the internship, he demonstrated excellent developer skills with a self-motivated attitude to learn new
-  skills. His performance exceeded expectations and he was able to complete the project successfully on time.
-</p>
+  {/* Content layer */}
+  <div style={{ position: 'relative', zIndex: 2, padding: '1rem' }}>
+    <p className="my-4 border-white" style={{ textIndent: '6rem' }}>
+      He has worked on a project titled 'DOC Q'. This project was aimed to build a healthcare management system (HMS)
+      for doctors and patients to ease their appointment scheduling, record-keeping, and the consultations. As part of
+      the project, he has developed the backend of the platform from scratch with his team.
+    </p>
 
+    <p className="my-4 border-white" style={{ textIndent: '6rem' }}>
+      During the internship, he demonstrated excellent developer skills with a self-motivated attitude to learn new
+      skills. His performance exceeded expectations and he was able to complete the project successfully on time.
+    </p>
+  </div>
+
+  <div
+    style={{
+      position: 'absolute',
+      top: 100,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundImage: `url(${logo})`,
+      backgroundSize: '400px',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      opacity: 0.2, // Adjust the background opacity
+      zIndex: 1,
+    }}
+  ></div>
 
         <p className="my-4 w-[70%] border-white">We wish him all the best for his future endeavors <br /> from the team at DOC-Q</p>
 
