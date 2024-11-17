@@ -47,7 +47,6 @@ export const createSupportTicket = async (req, res) => {
         {ticketID:ticketID},
         {response:response,
           resolved:true,
-          status: "solved"
         },
         {new:true}
       );
@@ -59,13 +58,13 @@ export const createSupportTicket = async (req, res) => {
       try {
         const text = `Dear ${name},
 
-We hope this message finds you well.
+Thank you for reaching out to us.
 
-We’re writing to inform you that your recent query (Ticket ID: ${ticketID}) has been resolved and the ticket has been closed.
+ ${response} 
 
-If you feel that your issue has not been fully addressed or you need further assistance, please don’t hesitate to create a new ticket. Our team will be happy to help you.
+In the meantime, if you need further assistance or wish to provide additional information, feel free to reply to this email or contact us directly at support@docq.in.
 
-Thank you for reaching out, and we look forward to assisting you in the future.
+Thank you for your patience and understanding.
 
 Best regards,
 Support Team
