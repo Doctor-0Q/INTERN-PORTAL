@@ -11,7 +11,7 @@ const AdminMessages = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedTicket, setSelectedTicket] = useState(location.state?.selectedTicket || null);
   const [isMobileView, setIsMobileView] = useState(false); 
-  const [filter, setFilter] = useState("Pending"); 
+  const [filter, setFilter] = useState("All tickets"); 
   const ticketsPerPage = 6;
 
     useEffect(() => {
@@ -61,7 +61,7 @@ const AdminMessages = () => {
   return (
     <div className="flex flex-col  items-center bg-slate-50 w-full">
       <div className="flex flex-row justify-center items-center p-4 gap-16">
-        {["All Tickets", "Pending", "Resolved", "Closed"].map((status) => (
+        {["All Tickets", "Pending", "Solved", "Closed"].map((status) => (
           <p
             key={status}
             onClick={() => {
