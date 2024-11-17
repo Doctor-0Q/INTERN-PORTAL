@@ -6,7 +6,7 @@ import { API_URL } from "../../config/config";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-const SlideToReply = ({ ticket, email }) => {
+const SlideToReply = ({ ticket, email, name }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [position, setPosition] = useState(0);
   const [adminReply,setAdminReply]=useState("")
@@ -24,7 +24,8 @@ const SlideToReply = ({ ticket, email }) => {
     try {
       const response=await axios.post(`${API_URL}/api/v1/ticketResolve/${ticket}`,{
         response:adminReply,
-        email:email
+        email:email,
+        name:name
       })
   
       if(response.data.success){
