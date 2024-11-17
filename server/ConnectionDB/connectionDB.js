@@ -8,8 +8,6 @@ const MONGODB_URL = process.env.MONGODB_URL;
 const connectdb = async () => {
     try {
         await mongoose.connect(MONGODB_URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
             serverSelectionTimeoutMS: 15000,
             socketTimeoutMS: 45000,
         });
