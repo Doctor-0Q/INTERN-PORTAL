@@ -2,6 +2,11 @@ import { Ticket } from "../Model/supportTicket.js";
 import { sendEmail } from "./emailService.js";
 import { ticketEmailTemplates } from "../util/ticketEmailTemplates.js";
 
+const handleResponse = (res, status, data) => {
+  res.status(status).json(data);
+};
+
+
 // Controller to get all support tickets
 export const getAllSupportTickets = async (req, res) => {
   try {
