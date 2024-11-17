@@ -10,6 +10,20 @@ const TicketDetails = ({ ticket, selectTicket }) => {
   const femalePic="https://png.pngtree.com/png-clipart/20190904/original/pngtree-user-cartoon-girl-avatar-png-image_4492903.jpg"
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dropdownRef = useRef(null);
+  const [isPopupVisible, setPopupVisible] = useState(false);
+  const [currentAction, setCurrentAction] = useState("");
+
+  const handleConfirm = () => {
+    if (currentAction === "Solved") {
+      console.log("Ticket marked as Solved.");
+    } else if (currentAction === "Pending") {
+      console.log("Ticket marked as Pending.");
+    } else if (currentAction === "Closed") {
+      console.log("Ticket marked as Closed.");
+    }
+    setPopupVisible(false);
+    handleUpdateTicket();
+  };
   
   const formatDate = (isoString) => {
     const date = new Date(isoString);
@@ -33,19 +47,18 @@ const TicketDetails = ({ ticket, selectTicket }) => {
     setIsDropdownVisible(!isDropdownVisible);
   };
 
-  const handleCloseTicket = async(e) => {
-    e.preventDefault();
+  const handleUpdateTicket = async(e) => {
     console.log("Close ticket clicked");
 
     try {
-      const response=await axios.post(`${API_URL}/api/v1/ticketClosing/${ticket.ticketID}`,{
-        status:"closed",
+      const response=await axios.post(`${API_URL}/api/v1/ticketUpdating/${ticket.ticketID}`,{
+        status:currentAction,
         name:ticket.name,
         email: ticket.email
       })
   
       if(response.data.success){
-        toast.success("Ticket closed successfully")
+        toast.success("Ticket Updated successfully")
       }
       else{
         toast.error("please try again")
@@ -184,33 +197,83 @@ const TicketDetails = ({ ticket, selectTicket }) => {
       Please address the issue accordingly.
     </p>
       </div>
-      <div className="flex flex-col w-[20%] space-y-2 bg-[#f7f7f7] rounded-[25px] shadow-lg p-3">
-        <p className='text-black text-md font-semibold text-center'>
-          Option
-        </p>
-        <button
-          className={`text-sm px-1 py-1 rounded-full text-black ${
-            ticket.resolved? 'bg-green-500' : 'bg-gray-300'
-          }`}
-        >
-          Solved
-        </button>
-        <button
-          className={`text-sm px-1 py-1 rounded-full text-black ${
-            !(ticket.resolved)? 'bg-red-500' : 'bg-gray-300'
-          }`}
-        >
-          Pending
-        </button>
-        <button
-        onClick={handleCloseTicket}
-          className={`text-sm px-1 py-1 rounded-full text-black ${
-            ticket.status.toLowerCase()==='closed'? 'bg-red-500' : 'bg-gray-300'
-          }`}
-        >
-          Closed
-        </button>
-      </div>
+      <div className="flex flex-col w-[20%] space-y-2 bg-[#f7f7f7] rounded-[25px] shadow-lg p-3 relative">
+      <p className="text-black text-md font-semibold text-center">Option</p>
+
+      <button
+        onClick={() => {
+          setCurrentAction("Solved");
+          setPopupVisible(true);
+        }}
+        className={`text-sm px-1 py-1 rounded-full text-black ${
+          ticket.status.toLowerCase() === "solved"
+            ? "bg-green-500"
+            : "bg-gray-300"
+        }`}
+      >
+        Solved
+      </button>
+
+      <button
+        onClick={() => {
+          setCurrentAction("Pending");
+          setPopupVisible(true);
+        }}
+        className={`text-sm px-1 py-1 rounded-full text-black ${
+          ticket.status.toLowerCase() === "pending"
+            ? "bg-red-500"
+            : "bg-gray-300"
+        }`}
+      >
+        Pending
+      </button>
+
+      <button
+        onClick={() => {
+          setCurrentAction("Closed");
+          setPopupVisible(true);
+        }}
+        className={`text-sm px-1 py-1 rounded-full text-black ${
+          ticket.status.toLowerCase() === "closed"
+            ? "bg-blue-500"
+            : "bg-gray-300"
+        }`}
+      >
+        Closed
+      </button>
+
+      {/* Popup */}
+      {isPopupVisible && (
+        <div className="absolute top-0 right-20 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-10">
+          <div className="bg-white p-6 rounded-lg shadow-md space-y-4 w-[90%] sm:w-[400px]">
+            <p className="text-gray-800 text-center">
+              Are you sure you want to mark this ticket as{" "}
+              <span className="font-bold">{currentAction}</span>?
+            </p>
+            <div className="flex justify-center space-x-4">
+              <button
+                onClick={() => setPopupVisible(false)}
+                className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirm}
+                className={`px-4 py-2 rounded-md text-white ${
+                  currentAction === "Solved"
+                    ? "bg-green-500 hover:bg-green-600"
+                    : currentAction === "Pending"
+                    ? "bg-red-500 hover:bg-red-600"
+                    : "bg-red-500 hover:bg-red-600"
+                }`}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
     </div>
 
     {/* Ticket Description */}
