@@ -303,7 +303,7 @@ const AddminAddIntern = () => {
               value={formData.dateOfJoining}
               onChange={(e) => setFormData({ ...formData, dateOfJoining: e.target.value })}
             />
-            <Calendar className="absolute right-[110px] md:right-2 top-[10px] md:top-2.5 text-gray-400 pointer-events-none" size={20} />
+            <Calendar className="hidden md:absolute right-[110px] md:right-2 top-[10px] md:top-2.5 text-gray-400 pointer-events-none" size={20} />
           </div>
         </div>
 
