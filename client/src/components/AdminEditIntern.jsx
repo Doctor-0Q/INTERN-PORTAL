@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+ import { API_URL } from '../../config/config';
+import React, { useState } from 'react';
 import { Search, Download, AlertCircle } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { API_URL } from '../../config/config';
 
 
 const EditIntern = () => {
-
-  const { internId } = useParams();
-  const navigate = useNavigate();
-  const [internID, setInternId] = useState(internId || '');
+  const [internID, setInternId] = useState('');
   const [formData, setFormData] = useState({
     forename: '',
     contactNo: '',
@@ -41,52 +37,17 @@ const EditIntern = () => {
     { value: 'ux-designer', label: 'UX Designer' }
   ];
 
-  useEffect(() => {
-    // Automatically fetch data if internId exists in URL
-    if (internId) {
-      setInternId(internId); // Set the internID state
-      fetchInternData(internId); // Fetch data immediately
-    }
-  }, [internId]);
-
-  const fetchInternData = async (id) => {
-    try {
-      const response = await axios.get(`${API_URL}/api/v1/interns/${id}`);
-      setFormData({
-        forename: response.data.forename || '',
-        contactNo: response.data.contactNo || '',
-        email: response.data.email || '',
-        gender: response.data.gender || '',
-        status: response.data.status || '',
-        role: response.data.role || '',
-        performance: response.data.performance || '',
-        position: response.data.position || '',
-        department: response.data.department || '',
-        projects: response.data.projects || '',
-        canDownloadCertificate: response.data.canDownloadCertificate,
-        canDownloadLOR: response.data.canDownloadLOR,
-      });
-
-      if (response.data.documents) {
-        setDocuments(response.data.documents);
-      }
-    } catch (error) {
-      console.error('Error fetching intern data:', error);
-      toast.error('Failed to fetch intern data');
-    }
-  };
-
   // Handler for searching intern by ID
 
   const handleSearch = async () => {
     try {
-        if (!internID.trim()) {
+      if (!internID.trim()) {
         alert('Please enter an Intern ID');
         return;
       }
 
       // Use Axios to fetch intern data
-      const response = await axios.get(`${API_URL}/api/v1/interns/${idToSearch}`);
+      const response = await axios.get(`${API_URL}/api/v1/interns/${internID}`);
 
       // Update form data with the received intern data
       setFormData({
@@ -118,7 +79,7 @@ const EditIntern = () => {
 
 
   // Handler for input field changes
-  const handleInputChange = (e) => {  
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -182,7 +143,7 @@ const EditIntern = () => {
 
 
       // Update the intern data via the editIntern endpoint
-      const response = await axios.post(`${API_URL}/api/v1/editIntern/${internID}`, formData);
+      const response = await axios.post(`http://localhost:8080/api/v1/editIntern/${internID}`, formData);
 
       if (response.status !== 200) {
         toast.error("Failed to update details")
