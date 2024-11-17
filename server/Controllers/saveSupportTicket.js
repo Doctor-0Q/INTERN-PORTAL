@@ -37,7 +37,7 @@ export const createSupportTicket = async (req, res) => {
     try {
       
       const {ticketID}=req.params;
-      const {response, email}=req.body;
+      const {response, email, name}=req.body;
 
       if (!ticketID || !response) {
         return res.status(400).json({ success: false, message: "Ticket ID and response are required." });
@@ -56,20 +56,22 @@ export const createSupportTicket = async (req, res) => {
       }
 
       try {
-        const text = `Hello,
+        const text = `Dear ${name},
 
-This is response email regarding the issue from DOC-Q
+We hope this message finds you well.
 
-Your suppoort ticket ID is #${ticketID}
+We’re writing to inform you that your recent query (Ticket ID: ${ticketID}) has been resolved and the ticket has been closed.
 
-Response:
-${response}
+If you feel that your issue has not been fully addressed or you need further assistance, please don’t hesitate to create a new ticket. Our team will be happy to help you.
+
+Thank you for reaching out, and we look forward to assisting you in the future.
 
 Best regards,
-DOC-Q Team`;
+Support Team
+DOC-Q`;
         await sendEmail(
           email, // Recipient email from the request body
-          "Ticket Resolved",
+          "Your Ticket Query",
           text
         );
         console.log("Email sent successfully to", email);
