@@ -55,7 +55,7 @@ We hope this message finds you well.
 
 We’re writing to inform you that your recent query (Ticket ID: ${ticketID}) has been resolved and the ticket has been closed.
 
-If you feel that your issue has not been fully addressed or you need further assistance, please don’t hesitate to create a new ticket. Our team will be happy to help you.
+If you still require assistance or have additional questions, feel free to create a new ticket, and our team will be happy to help.  
 
 Thank you for reaching out, and we look forward to assisting you in the future.
 
