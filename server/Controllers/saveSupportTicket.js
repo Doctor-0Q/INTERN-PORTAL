@@ -46,7 +46,8 @@ export const createSupportTicket = async (req, res) => {
       const updateTicket=await Ticket.findOneAndUpdate(
         {ticketID:ticketID},
         {response:response,
-          resolved:true
+          resolved:true,
+          status: "solved"
         },
         {new:true}
       );
