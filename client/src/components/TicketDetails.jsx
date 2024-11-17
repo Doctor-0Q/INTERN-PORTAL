@@ -163,7 +163,7 @@ const TicketDetails = ({ ticket, selectTicket }) => {
       {/* Slide to Reply Section */}
       <div className='w-full flex justify-center items-center'>
 
-      <SlideToReply ticket={ticket.ticketID} email={ticket.email}/>
+      <SlideToReply ticket={ticket.ticketID} email={ticket.email} name={ticket.name}/>
       </div>
 
      
@@ -203,6 +203,7 @@ const TicketDetails = ({ ticket, selectTicket }) => {
           Pending
         </button>
         <button
+        onClick={handleCloseTicket}
           className={`text-sm px-1 py-1 rounded-full text-black ${
             ticket.status.toLowerCase()==='closed'? 'bg-red-500' : 'bg-gray-300'
           }`}
