@@ -6,7 +6,8 @@ import questionicon from "@/assets/questionicon.png";
 import { useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import { API_URL } from "../../config/config";
-
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const InternsDashboard = () => {
   const [interns, setInterns] = useState([]);
@@ -17,6 +18,14 @@ const InternsDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [showBar,setShowBar]=useState(false)
+  const [showTwoOptions, setShowOptions] = useState(false);
+  const [selectedInternId, setSelectedInternId] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [adminCredentials, setAdminCredentials] = useState({
+    username: "",
+    password: ""
+  });
+  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,10 +44,73 @@ const InternsDashboard = () => {
         setLoading(false);
       }
     };
-    
 
     fetchInterns();
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.options-container')) {
+        setShowOptions(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const initiateDelete = (internId) => {
+    console.log('Deleting intern with ID:', internId);
+    setSelectedInternId(internId);
+    setShowDeleteModal(true);
+  };
+  
+  const handleDeleteConfirmation = async () => {
+    if (!adminCredentials.username || !adminCredentials.password) {
+      setPasswordError("Username and password are required.");
+      return;
+    }
+  
+    try {
+      // Verify admin credentials
+      const loginResponse = await axios.post(`${API_URL}/api/v1/adminLogin`, {
+        username: adminCredentials.username,
+        password: adminCredentials.password
+      });
+      
+      if (loginResponse.data.success) {
+        console.log(`${API_URL}/api/v1/deleteIntern/${selectedInternId}`);
+        // Proceed with intern deletion
+        const deleteResponse = await axios.delete(`${API_URL}/api/v1/deleteIntern/${selectedInternId}`, {
+          data: { 
+            username: adminCredentials.username,
+            password: adminCredentials.password
+          }
+        });
+  
+        if (deleteResponse.data.success) {
+          const updatedInterns = interns.filter(intern => intern.internID !== selectedInternId);
+          setInterns(updatedInterns);
+          setFilteredInterns(updatedInterns);
+          toast.success("Intern deleted successfully.");
+          setShowDeleteModal(false);
+          setAdminCredentials({ username: "", password: "" });
+        }
+      } else {
+        toast.error("Invalid admin credentials");
+      }
+    } catch (error) {
+      console.log('Full error object:', error);
+      console.log('Error response:', error.response);
+      console.log('Error message:', error.message);
+      toast.error(error.response?.data?.message || "Operation failed");
+    }
+  };
+  
+
+  const showOptions=(internId)=>{
+    setSelectedInternId(internId);
+    setShowOptions(true);
+  }
 
   const showSearchbar=()=>{
     setShowBar(true)
@@ -243,6 +315,48 @@ const InternsDashboard = () => {
         </div>
       </div>
 
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg relative">
+            <h3 className="text-xl font-bold mb-4">Confirm Deletion</h3>
+            <p>Enter admin credentials to delete the intern.</p>
+            <input
+              type="text"
+              placeholder="Admin Username"
+              className="border rounded p-2 w-full mt-2"
+              value={adminCredentials.username}
+              onChange={(e) => setAdminCredentials(prev => ({...prev, username: e.target.value}))}
+            />
+            <input
+              type="password"
+              placeholder="Admin Password"
+              className="border rounded p-2 w-full mt-2"
+              value={adminCredentials.password}
+              onChange={(e) => setAdminCredentials(prev => ({...prev, password: e.target.value}))}
+            />
+            {passwordError && <div className="text-red-500 mt-1">{passwordError}</div>}
+            <div className="flex justify-end mt-4">
+              <button
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  setAdminCredentials({ username: "", password: "" });
+                }}
+                className="px-4 py-2 bg-gray-300 rounded mr-2"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteConfirmation}
+                className="px-4 py-2 bg-red-600 text-white rounded"
+              >
+                Confirm Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+
       {/* Interns Table */}
       <div className="overflow-x-auto md:mt-0 mt-10">
   <table className="min-w-full table-auto border-collapse bg-white hidden md:table">
@@ -268,8 +382,31 @@ const InternsDashboard = () => {
           </td>
           <td className="px-4 font-mukta py-2">{formatDate(intern.dateOfJoining)}</td>
           <td className="px-4 font-mukta py-2">{intern.completionDate || 'NA'}</td>
-          <td className="px-4 font-mukta py-2">
-            <button className="px-2 py-1 font-mukta text-lg rounded-lg">...</button>
+          <td className="px-4 font-mukta py-2 relative options-container">
+            <button 
+              onClick={() => showOptions(intern.internID)} // Make sure to use _id instead of internID
+              className="px-2 py-1 font-mukta text-lg rounded-lg"
+            >
+              ...
+            </button>
+            {showTwoOptions && selectedInternId === intern.internID && (
+              <div className="fixed right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                <div className="py-1">
+                  <button
+                    onClick={() => navigate(`../edit-interns/${intern.internID}`)}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Edit Intern
+                  </button>
+                  <button
+                    onClick={() => initiateDelete(intern.internID)}
+                    className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                  >
+                    Delete Intern
+                  </button>
+                </div>
+              </div>
+            )}
           </td>
         </tr>
       ))}
