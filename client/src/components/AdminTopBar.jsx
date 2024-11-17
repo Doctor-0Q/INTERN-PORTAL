@@ -64,7 +64,7 @@ const Navbar = () => {
         <div className="flex space-x-[2vw] items-center">
           <FaEnvelope
           onClick={()=>{
-            navigate('./messages')
+            navigate('./admin/messages')
           }}
            className="text-gray-600 hover:cursor-pointer" />
           <FaBell className="text-gray-600 hover:cursor-pointer" />
@@ -97,7 +97,7 @@ const Navbar = () => {
               <FaEnvelope className="text-gray-600 hover:cursor-pointer" />
               <span
               onClick={()=>{
-                navigate('./messages')
+                navigate('./admin/messages')
               }}
               >Messages</span>
             </div>
