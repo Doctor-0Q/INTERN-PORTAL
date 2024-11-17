@@ -20,7 +20,8 @@ export const createSupportTicket = async (req, res) => {
         message,
         response: "",   
         gender,  
-        resolved: false   
+        resolved: false,
+        status: "Pending"
       });
   
       await newTicket.save();
@@ -65,7 +66,7 @@ Response:
 ${response}
 
 Best regards,
-Your Team`;
+DOC-Q Team`;
         await sendEmail(
           email, // Recipient email from the request body
           "Ticket Resolved",
