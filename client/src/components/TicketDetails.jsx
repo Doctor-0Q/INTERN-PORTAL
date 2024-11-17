@@ -116,7 +116,9 @@ const TicketDetails = ({ ticket, selectTicket }) => {
           </div>
         </div>
         <div>
-          <HiOutlineDotsHorizontal className='hover:text-black hover:cursor-pointer h-5 w-5'/>
+          <HiOutlineDotsHorizontal
+          onClick={handleToggleDropdown}
+           className='hover:text-black hover:cursor-pointer h-5 w-5'/>
         </div>
         {isDropdownVisible && (
         <div className="absolute right-0 mt-2 bg-white border border-gray-300 shadow-lg rounded-md">
