@@ -48,10 +48,6 @@ const Footer = () => {
 
           <div className="text-center md:text-right">
             <h4 className="font-bold text-2xl text-gray-600 mb-3">Contact Us</h4>
-            <p className="text-black">#7, 6th cross Vinayaka nagar<br />
-              5th phase JP Nagar<br />
-              Bangalore 560078
-            </p>
             <p className="text-black mt-2">support@docq.in</p>
           </div>
         </div>
