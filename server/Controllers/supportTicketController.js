@@ -1,6 +1,11 @@
 import { Ticket } from "../Model/supportTicket.js";
 import { sendEmail } from "./emailService.js";
 
+const handleResponse = (res, status, data) => {
+  res.status(status).json(data);
+};
+
+
 // Controller to get all support tickets
 export const getAllSupportTickets = async (req, res) => {
   try {
@@ -41,24 +46,21 @@ export const ticketUpdate = async (req, res) => {
   const { status, name, email } = req.body;
 
   try {
-    // Find the ticket and update its status to "closed"
     const updatedTicket = await Ticket.findOneAndUpdate(
-      { ticketID: ticketID },
-      { status: status },
+      { ticketID },
+      { status },
       { new: true }
     );
 
     if (updatedTicket) {
-      res
-        .status(200)
-        .json({ success: true, message: "Ticket closed successfully" });
+      res.status(200).json({ success: true, message: "Ticket closed successfully" });
     } else {
       res.status(404).json({ success: false, message: "Ticket not found" });
     }
 
     try {
-      if (status.toLowerCase() === "closed") {
-        var text = `Dear ${name},
+      if(status.toLowerCase()=='closed'){
+      var text = `Dear ${name},
 
 We wanted to let you know that your recent query (Ticket ID: ${ticketID}) has been closed.
 
@@ -69,8 +71,8 @@ Thank you for reaching out to us, and we’re here to assist you whenever needed
 Best regards,
 Support Team
 DOC-Q`;
-        var subject = "Your Ticket Query Has Been Closed";
-      } else if (status.toLowerCase() === "solved") {
+var subject="Your Ticket Query Has Been Closed"
+      }else if(status.toLowerCase()=='solved'){
         var text = `Dear ${name},
 
         We’re writing to inform you that your recent query (Ticket ID: ${ticketID}) has been marked as solved.
@@ -82,7 +84,7 @@ Thank you for contacting us, and we’re always here to assist you further.
         Best regards,
         Support Team
         DOC-Q`;
-        var subject = "Your Ticket Query Has Been Marked as Solved";
+        var subject="Your Ticket Query Has Been Marked as Solved"
       }
       await sendEmail(
         email, // Recipient email from the request body
@@ -92,15 +94,14 @@ Thank you for contacting us, and we’re always here to assist you further.
       console.log("Email sent successfully to", email);
     } catch (emailError) {
       console.error("Error sending email:", emailError.message);
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Failed to send email notification.",
-        });
+      return res.status(500).json({ success: false, message: "Failed to send email notification." });
     }
   } catch (error) {
-    console.error("Error closing ticket:", error);
-    res.status(500).json({ success: false, message: "Failed to close ticket" });
+    console.error("Error updating ticket:", error);
+    handleResponse(res, 500, { 
+      success: false, 
+      message: "Failed to update ticket",
+      error: error.message 
+    });
   }
 };
