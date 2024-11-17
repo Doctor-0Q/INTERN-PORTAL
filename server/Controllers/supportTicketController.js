@@ -49,22 +49,36 @@ export const ticketUpdate = async (req, res) => {
     }
 
     try {
-      const text = `Dear ${name},
+      if(status.toLowerCase==='closed'){
+      var text = `Dear ${name},
 
-We hope this message finds you well.
+We wanted to let you know that your recent query (Ticket ID: ${ticketID}) has been closed.
 
-We’re writing to inform you that your recent query (Ticket ID: ${ticketID}) has been resolved and the ticket has been closed.
+If you feel your issue is not fully addressed, please email us at support@docq.in or fill out this form for a quick response.
 
-If you feel that your issue has not been fully addressed or you need further assistance, please don’t hesitate to create a new ticket. Our team will be happy to help you.
-
-Thank you for reaching out, and we look forward to assisting you in the future.
+Thank you for reaching out to us, and we’re here to assist you whenever needed.
 
 Best regards,
 Support Team
 DOC-Q`;
+var subject="Your Ticket Query Has Been Closed"
+      }else if(status.toLowerCase==='solved'){
+        var text = `Dear ${name},
+
+        We’re writing to inform you that your recent query (Ticket ID: ${ticketID}) has been marked as solved.
+
+If you think your issue is not fully resolved, you can email us at support@docq.in or fill out this form for a quick response - https://www.docqinternportal.live/contact-us.
+
+Thank you for contacting us, and we’re always here to assist you further.
+        
+        Best regards,
+        Support Team
+        DOC-Q`;
+        var subject="Your Ticket Query Has Been Marked as Solved"
+      }
       await sendEmail(
         email, // Recipient email from the request body
-        "Your Ticket Query Has Been Closed",
+        subject,
         text
       );
       console.log("Email sent successfully to", email);
