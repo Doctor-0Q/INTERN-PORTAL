@@ -62,7 +62,11 @@ const Navbar = () => {
           {formattedDate}
         </div>
         <div className="flex space-x-[2vw] items-center">
-          <FaEnvelope className="text-gray-600 hover:cursor-pointer" />
+          <FaEnvelope
+          onClick={()=>{
+            navigate('../admin/messages')
+          }}
+           className="text-gray-600 hover:cursor-pointer" />
           <FaBell className="text-gray-600 hover:cursor-pointer" />
           <img
             src={logoutIcon}
@@ -91,7 +95,11 @@ const Navbar = () => {
             </div>
             <div className="flex items-center space-x-2">
               <FaEnvelope className="text-gray-600 hover:cursor-pointer" />
-              <span>Messages</span>
+              <span
+              onClick={()=>{
+                navigate('../admin/messages')
+              }}
+              >Messages</span>
             </div>
             <div className="flex items-center space-x-2">
               <FaBell className="text-gray-600 hover:cursor-pointer" />
