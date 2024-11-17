@@ -59,6 +59,7 @@ const TicketDetails = ({ ticket, selectTicket }) => {
   
       if(response.data.success){
         toast.success("Ticket Updated successfully")
+        window.location.reload()
       }
       else{
         toast.error("please try again")
