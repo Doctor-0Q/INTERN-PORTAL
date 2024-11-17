@@ -138,12 +138,6 @@ const TicketDetails = ({ ticket, selectTicket }) => {
         {isDropdownVisible && (
         <div className="absolute right-0 mt-2 bg-white border border-gray-300 shadow-lg rounded-md">
           <button
-            onClick={handleCloseTicket}
-            className="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
-          >
-            Close Ticket
-          </button>
-          <button
             onClick={handleDeleteTicket}
             className="block px-4 py-2 text-gray-700 text-red-500 hover:bg-gray-100 w-full text-left"
           >
