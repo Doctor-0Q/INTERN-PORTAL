@@ -10,7 +10,8 @@ const AdminMessages = () => {
   const [tickets, setTickets] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedTicket, setSelectedTicket] = useState(location.state?.selectedTicket || null);
-  const [isMobileView, setIsMobileView] = useState(false); // State to track if it's mobile view
+  const [isMobileView, setIsMobileView] = useState(false); 
+  const [filter, setFilter] = useState("Pending"); 
   const ticketsPerPage = 6;
 
     useEffect(() => {
@@ -36,10 +37,15 @@ const AdminMessages = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  const filteredTickets =
+    filter === "All Tickets"
+      ? tickets
+      : tickets.filter((ticket) => ticket.status.toLowerCase() === filter.toLowerCase());
+
   // Get current tickets
   const indexOfLastTicket = currentPage * ticketsPerPage;
   const indexOfFirstTicket = indexOfLastTicket - ticketsPerPage;
-  const currentTickets = tickets.slice(indexOfFirstTicket, indexOfLastTicket);
+  const currentTickets = filteredTickets.slice(indexOfFirstTicket, indexOfLastTicket);
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -49,15 +55,26 @@ const AdminMessages = () => {
   };
 
   const handleBackClick = () => {
-    setSelectedTicket(null); // Set selected ticket to null to go back to ticket list
+    setSelectedTicket(null);
   };
 
   return (
     <div className="flex flex-col  items-center bg-slate-50 w-full">
-      <div className="w-full flex justify-start p-4">
-        <p className="w-full font-semibold text-gray-900 text-md text-left">
-          Messages
-        </p>
+      <div className="flex flex-row justify-center items-center p-4 gap-16">
+        {["All Tickets", "Pending", "Resolved", "Closed"].map((status) => (
+          <p
+            key={status}
+            onClick={() => {
+              setFilter(status);
+              setCurrentPage(1); // Reset to first page when filter changes
+            }}
+            className={` font-semibold text-gray-900 text-md  bg-gray-300 p-2 rounded-3xl shadow-md hover:cursor-pointer ${
+              filter === status ? "bg-gray-400" : ""
+            }`}
+          >
+            {status}
+          </p>
+        ))}
       </div>
 
       <div className="flex flex-row w-full">
