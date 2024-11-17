@@ -1,10 +1,15 @@
 import React from 'react';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import SlideToReply from './SlideToReply';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import { API_URL } from "../../config/config";
 
 const TicketDetails = ({ ticket, selectTicket }) => {
   const malePic="https://i.pinimg.com/originals/22/f8/1f/22f81f5c4011da6a803d997260b2c772.jpg"
   const femalePic="https://png.pngtree.com/png-clipart/20190904/original/pngtree-user-cartoon-girl-avatar-png-image_4492903.jpg"
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const dropdownRef = useRef(null);
   
   const formatDate = (isoString) => {
     const date = new Date(isoString);
@@ -16,6 +21,74 @@ const TicketDetails = ({ ticket, selectTicket }) => {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
   };
   
+
+  const handleToggleDropdown = () => {
+    setIsDropdownVisible(!isDropdownVisible);
+  };
+
+  const handleCloseTicket = async(e) => {
+    e.preventDefault();
+    console.log("Close ticket clicked");
+
+    try {
+      const response=await axios.post(`${API_URL}/api/v1/ticketClosing/${ticket.ticketID}`,{
+        status:"closed",
+        name:ticket.name,
+        email: ticket.email
+      })
+  
+      if(response.data.success){
+        toast.success("Ticket closed successfully")
+      }
+      else{
+        toast.error("please try again")
+      }
+    } catch (error) {
+      const errorMessage =
+      error.response?.data?.message || "An unexpected error occurred";
+    toast.error(errorMessage);
+    }
+
+    setIsDropdownVisible(false);
+    
+    
+  };
+
+  const handleDeleteTicket = async(e) => {
+    e.preventDefault();
+    console.log("Delete ticket clicked");
+
+    try {
+      const response=await axios.post(`${API_URL}/api/v1/ticketDelete/${ticket.ticketID}`,{
+        status:"closed"
+      })
+      if(response.data.success){
+        toast.success("Ticket Deleted successfully")
+        window.location.reload()
+      }
+      else{
+        toast.error("please try again")
+      }
+    } catch (error) {
+      
+    toast.error(error.response.data.message);
+    }
+
+    setIsDropdownVisible(false);
+  };
+
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   
 
   const goBack=()=>{
@@ -45,6 +118,22 @@ const TicketDetails = ({ ticket, selectTicket }) => {
         <div>
           <HiOutlineDotsHorizontal className='hover:text-black hover:cursor-pointer h-5 w-5'/>
         </div>
+        {isDropdownVisible && (
+        <div className="absolute right-0 mt-2 bg-white border border-gray-300 shadow-lg rounded-md">
+          <button
+            onClick={handleCloseTicket}
+            className="block px-4 py-2 text-gray-700 hover:bg-gray-100 w-full text-left"
+          >
+            Close Ticket
+          </button>
+          <button
+            onClick={handleDeleteTicket}
+            className="block px-4 py-2 text-gray-700 text-red-500 hover:bg-gray-100 w-full text-left"
+          >
+            Delete Ticket
+          </button>
+        </div>
+      )}
       </div>
 
 
@@ -108,6 +197,13 @@ const TicketDetails = ({ ticket, selectTicket }) => {
           }`}
         >
           Pending
+        </button>
+        <button
+          className={`text-sm px-1 py-1 rounded-full text-black ${
+            ticket.status.toLowerCase()==='closed'? 'bg-red-500' : 'bg-gray-300'
+          }`}
+        >
+          Closed
         </button>
       </div>
     </div>
