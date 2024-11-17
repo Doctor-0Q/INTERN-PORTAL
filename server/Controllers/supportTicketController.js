@@ -49,7 +49,7 @@ export const ticketUpdate = async (req, res) => {
     }
 
     try {
-      if(status.toLowerCase==='closed'){
+      if(status.toLowerCase()==='closed'){
       var text = `Dear ${name},
 
 We wanted to let you know that your recent query (Ticket ID: ${ticketID}) has been closed.
@@ -62,7 +62,7 @@ Best regards,
 Support Team
 DOC-Q`;
 var subject="Your Ticket Query Has Been Closed"
-      }else if(status.toLowerCase==='solved'){
+      }else if(status.toLowerCase()==='solved'){
         var text = `Dear ${name},
 
         We’re writing to inform you that your recent query (Ticket ID: ${ticketID}) has been marked as solved.
