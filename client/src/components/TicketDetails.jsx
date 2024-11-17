@@ -21,6 +21,13 @@ const TicketDetails = ({ ticket, selectTicket }) => {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
   };
   
+  
+
+  const goBack=()=>{
+    selectTicket(null)
+  }
+
+
 
   const handleToggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
@@ -89,17 +96,12 @@ const TicketDetails = ({ ticket, selectTicket }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  
-
-  const goBack=()=>{
-    selectTicket(null)
-  }
 
   return (
     <div className='flex flex-col space-y-2 items-center justify-center'>
-    <div className="bg-white p-6 rounded-md shadow-md w-[90%]">
+    <div className="bg-white p-6 rounded-md shadow-md w-[90%]" ref={dropdownRef}>
       {/* Ticket Header */}
-      <div className="flex items-center justify-between mb-6 border-b-4 pb-4">
+      <div className="flex items-center justify-between mb-6 border-b-4 pb-4"  >
         <div className="flex items-center space-x-3">
           <div className='flex justify-between space-x-3'>
           <p className='text-2xl hover:cursor-pointer' onClick={goBack}>{'<'}</p>
@@ -117,8 +119,8 @@ const TicketDetails = ({ ticket, selectTicket }) => {
         </div>
         <div>
           <HiOutlineDotsHorizontal
-          onClick={handleToggleDropdown}
-           className='hover:text-black hover:cursor-pointer h-5 w-5'/>
+           onClick={handleToggleDropdown}
+            className='hover:text-black hover:cursor-pointer h-5 w-5'/>
         </div>
         {isDropdownVisible && (
         <div className="absolute right-0 mt-2 bg-white border border-gray-300 shadow-lg rounded-md">
