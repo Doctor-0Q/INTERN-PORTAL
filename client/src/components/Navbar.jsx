@@ -157,7 +157,7 @@ const Navbar = () => {
       </div>
 
       {isOpen && (
-        <div className="md:hidden h-[200px]">
+        <div className="md:hidden h-[230px]">
           <ul className="flex flex-col items-center space-y-4">
             <li>
               <Link  onClick={() => setIsOpen(!isOpen)}
