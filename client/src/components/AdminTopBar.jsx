@@ -56,7 +56,7 @@ const Navbar = () => {
       </div>
 
       {/* Desktop Menu */}
-      <div className="hidden md:flex items-center space-x-[3vw]">
+      <div className="hidden md:flex items-center space-x-[1.5vw]">
         <div className="font-medium">Admin</div>
         <div
         onClick={()=>{
