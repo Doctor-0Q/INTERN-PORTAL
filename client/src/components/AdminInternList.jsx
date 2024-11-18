@@ -362,6 +362,7 @@ const InternsDashboard = () => {
   <table className="min-w-full table-auto border-collapse bg-white hidden md:table">
     <thead>
       <tr>
+        <th className="text-left font-mukta font-normal text-gray-500 px-4 py-2">Inter ID</th>
         <th className="text-left font-mukta font-normal text-gray-500 px-4 py-2">Name</th>
         <th className="text-left font-mukta font-normal text-gray-500 px-4 py-2">Role</th>
         <th className="text-left font-mukta font-normal text-gray-500 px-4 py-2">Status</th>
@@ -373,6 +374,7 @@ const InternsDashboard = () => {
     <tbody>
       {currentInterns.map((intern, index) => (
         <tr key={index} className="border-b">
+          <td className="px-4 font-mukta font-normal text-black py-2">{intern.internID}</td>
           <td className="px-4 font-mukta font-normal text-black py-2">{intern.forename}</td>
           <td className="px-4 font-mukta py-2">{intern.role}</td>
           <td className="px-4 font-mukta py-2">
