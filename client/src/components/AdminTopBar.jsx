@@ -56,12 +56,9 @@ const Navbar = () => {
       </div>
 
       {/* Desktop Menu */}
-      <div className="hidden md:flex items-center space-x-[1.5vw]">
+      <div className="hidden md:flex items-center space-x-[3vw]">
         <div className="font-medium">Admin</div>
         <div
-        onClick={()=>{
-            navigate('../contact-us')
-          }}
            className="font-medium hover:cursor-pointer hover:bg-gray-200 border p-1 rounded-lg">Contact-us</div>
         <div className="text-black text-sm border rounded-lg px-2 py-1">
           {formattedDate}
@@ -87,9 +84,6 @@ const Navbar = () => {
         <div className="absolute top-14 left-0 w-full bg-white shadow-md p-4 flex flex-col items-start md:hidden">
           <div className="font-medium mb-2">Admin</div>
           <div
-          onClick={()=>{
-            navigate('../contact-us')
-          }}
            className="font-medium mb-2 hover:cursor-pointer hover:bg-gray-200 border p-1 rounded-lg">Contact-us</div>
           <div className="text-black text-sm border rounded-lg px-2 py-1 mb-2">
             {formattedDate}
