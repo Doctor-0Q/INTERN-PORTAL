@@ -362,7 +362,7 @@ const InternsDashboard = () => {
   <table className="min-w-full table-auto border-collapse bg-white hidden md:table">
     <thead>
       <tr>
-        <th className="text-left font-mukta font-normal text-gray-500 px-4 py-2">Inter ID</th>
+        <th className="text-left font-mukta font-normal text-gray-500 px-4 py-2">Intern ID</th>
         <th className="text-left font-mukta font-normal text-gray-500 px-4 py-2">Name</th>
         <th className="text-left font-mukta font-normal text-gray-500 px-4 py-2">Role</th>
         <th className="text-left font-mukta font-normal text-gray-500 px-4 py-2">Status</th>
