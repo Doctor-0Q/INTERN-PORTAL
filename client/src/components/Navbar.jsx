@@ -90,6 +90,11 @@ const Navbar = () => {
                 Documents
               </Link>
             </li>
+            <li>
+              <Link to='/contact-us' className="text-black font-semibold hover:underline">
+                Contact Us
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -184,6 +189,14 @@ const Navbar = () => {
                 className="text-gray-700 hover:text-blue-600 transition duration-300"
               >
                 Documents
+              </Link>
+            </li>
+            <li>
+              <Link  onClick={() => setIsOpen(!isOpen)}
+                to="/contact-us"
+                className="text-gray-700 hover:text-blue-600 transition duration-300"
+              >
+                Contact Us
               </Link>
             </li>
 
