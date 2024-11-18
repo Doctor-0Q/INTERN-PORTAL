@@ -155,7 +155,7 @@ const Navbar = () => {
         <div className="md:hidden h-[200px]">
           <ul className="flex flex-col items-center space-y-4">
             <li>
-              <Link
+              <Link  onClick={() => setIsOpen(!isOpen)}
                 to="/"
                 className="text-gray-700 hover:text-blue-600 transition duration-300"
               >
@@ -163,7 +163,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link
+              <Link  onClick={() => setIsOpen(!isOpen)}
                 to="/intern-performance"
                 className="text-gray-700 hover:text-blue-600 transition duration-300"
               >
@@ -171,7 +171,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link
+              <Link  onClick={() => setIsOpen(!isOpen)}
                 to="/Validate-Certificate"
                 className="text-gray-700 hover:text-blue-600 transition duration-300"
               >
@@ -179,7 +179,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link
+              <Link  onClick={() => setIsOpen(!isOpen)}
                 to="/documents"
                 className="text-gray-700 hover:text-blue-600 transition duration-300"
               >
@@ -209,19 +209,19 @@ const Navbar = () => {
               <ul className="flex flex-col space-y-3 px-[20%] py-3 font-semibold text-black">
                 <li className="flex items-center space-x-2">
                   <i className="fas fa-user text-xl"></i>
-                  <Link to="/profile" className=" hover:underline">Profile</Link>
+                  <Link  onClick={() => setIsOpen(!isOpen)} to="/profile" className=" hover:underline">Profile</Link>
                 </li>
                 <li className="flex items-center space-x-2">
                   <i className="fas fa-cog text-xl"></i>
-                  <Link to="/Settings" className=" hover:underline">Settings</Link>
+                  <Link  onClick={() => setIsOpen(!isOpen)} to="/Settings" className=" hover:underline">Settings</Link>
                 </li>
                 <li className="flex items-center space-x-2">
                   <i className="fas fa-question-circle text-xl"></i>
-                  <Link to="/contact-us" className=" hover:underline">Support</Link>
+                  <Link  onClick={() => setIsOpen(!isOpen)} to="/contact-us" className=" hover:underline">Support</Link>
                 </li>
                 <li className="flex items-center space-x-2">
                   <i className="fas fa-globe text-xl"></i>
-                  <a href="#" className=" hover:underline">Language</a>
+                  <a  onClick={() => setIsOpen(!isOpen)} href="#" className=" hover:underline">Language</a>
                 </li>
               </ul>
               <div className="text-center mt-2 flex-start">
