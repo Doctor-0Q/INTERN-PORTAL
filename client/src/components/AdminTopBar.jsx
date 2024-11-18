@@ -60,7 +60,7 @@ const Navbar = () => {
         <div className="font-medium">Admin</div>
         <div
         onClick={()=>{
-            navigate('./contact-us')
+            navigate('../contact-us')
           }}
            className="font-medium hover:cursor-pointer hover:bg-gray-200 border p-1 rounded-lg">Contact-us</div>
         <div className="text-black text-sm border rounded-lg px-2 py-1">
@@ -88,7 +88,7 @@ const Navbar = () => {
           <div className="font-medium mb-2">Admin</div>
           <div
           onClick={()=>{
-            navigate('./contact-us')
+            navigate('../contact-us')
           }}
            className="font-medium mb-2 hover:cursor-pointer hover:bg-gray-200 border p-1 rounded-lg">Contact-us</div>
           <div className="text-black text-sm border rounded-lg px-2 py-1 mb-2">
