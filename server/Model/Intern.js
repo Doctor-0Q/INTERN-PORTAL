@@ -69,6 +69,9 @@ const InternSchema = new mongoose.Schema({
   canDownloadLOR: {
     type: String,
   },
+  canDownloadAppreciation:{
+    type:String
+  },
   leaveDate:{
     type:String
   }
