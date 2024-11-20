@@ -110,7 +110,7 @@ in one place for quick reference and verification."
                 </div>
         </div>
 
-        {internID?(<div className='flex flex-col md:flex-row justify-center items-center mt-[7%] gap-6 md:gap-[7%] ml-[5%] mr-[5%]'>
+        {internID?(<div className='flex flex-col md:flex-row justify-center items-center mt-[7%] gap-6 md:gap-[1%] ml-[5%] mr-[5%]'>
         {/* {First div} */}
             <div className='bg-[#186cec] p-4 pr-10 pl-6 pb-6 rounded-[25px] border border-black md:w-[25%]'>
                 <div className='flex flex-col '>
