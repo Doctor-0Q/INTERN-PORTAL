@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import offerLetterImg from '@/assets/OfferLetterImg.jpg';
 import lorImg from '@/assets/LOR.jpg'
-import certificateImg from '@/assets/certificate.png'
+import certificateImg from '@/assets/CERTIFICATE-1.png'
 import DocumentLoginMessage from "./DocumentLoginMessage";
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
