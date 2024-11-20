@@ -41,6 +41,7 @@ const MainLayout = () => {
         <Route path="/view-OfferLetter-Python-Developer" element={<OfferLetterPythonDeveloper />} />
         <Route path="/view-OfferLetter-Web-Developer" element={<OfferLetterWebDeveloper />} />
         <Route path="/not-login" element={<PerformanceLoginMessage />} />
+        <Route path="/Appreciation-certificate" element={<AppreciationCertificate />} />
       </Routes>
 
       {!isLoginPage && <Footer />}

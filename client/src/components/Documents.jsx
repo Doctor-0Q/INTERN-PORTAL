@@ -190,6 +190,34 @@ InternShip Certificate
                 </div>}
                
             </div>
+
+             {/* {Appreciation certificate} */}
+             <div className='bg-[#186cec] p-4 pr-10 pl-6 pb-6 rounded-[25px] border border-black md:w-[25%]'>
+                <div className='flex flex-col '>
+                <h1 className='text-white font-bold text-2xl text-start w-[70%]'>
+                Certificate of Appreciation
+                </h1>
+                <p className='text-white mt-[4%] text-start'>
+                Click Below to View Or Download
+Appreciation Certificate
+                </p>
+                <div className='hidden md:flex justify-center items-center mt-4'>
+                    <img src={certificateImg} alt="" className='w-[20vw] h-[17vw]'/>
+                </div>
+                </div>
+                {downloadCertificate && <div className='mt-[4%] flex flex-row gap-[30%] ml-[4%]'>
+                    <Link to="/Appreciation-certificate" className='bg-transparent text-lg text-gray-800 font-semibold text-lg'>
+                        View
+                    </Link>
+                    <Link to='/Appreciation-certificate?download=true'
+                    target="_blank" 
+                    
+                    className='bg-white border border-black p-2 rounded-lg text-lg text-gray-800 font-semibold text-lg'>
+                        Download
+                    </Link>
+                </div>}
+               
+            </div>
             
         </div>):(<div className='h-[10vw] flex justify-center items-center text-4xl'>
             Please login first to access the documents
