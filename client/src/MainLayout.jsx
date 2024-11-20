@@ -16,6 +16,7 @@ import OfferLetterAppDeveloper from "./components/OfferLetterAppDeveloper";
 import OfferLetterPythonDeveloper from "./components/OfferLetterPythonDeveloper";
 import OfferLetterWebDeveloper from "./components/OfferLetterWebDeveloper";
 import LOR from "./components/LOR";
+import AppreciationCertificate from "./components/AppreciationCertificate";
 
 const MainLayout = () => {
   const location = useLocation();
