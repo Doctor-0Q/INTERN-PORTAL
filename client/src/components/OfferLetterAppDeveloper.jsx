@@ -85,7 +85,6 @@ const OfferLetterAppDeveloper = () => {
         <ul className="list-disc ml-8 mt-1  text-sm border-white">
           <li className="border-white">Position: App Developer</li>
           <li className="border-white">Location: Remote</li>
-          <li className="border-white">Start Date: {startDate}</li>
         </ul>
 
         <h4 className="mt-4 font-semibold text-sm border-white">Responsibilities:</h4>
