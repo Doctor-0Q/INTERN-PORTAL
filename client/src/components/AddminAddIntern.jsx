@@ -16,6 +16,7 @@ const AddminAddIntern = () => {
     performance: '',
     role: '',
     certificateId: '',
+    canDownloadAppreciation:false,
     canDownloadCertificate: false,
     canDownloadLOR: false,
     
@@ -449,7 +450,29 @@ const AddminAddIntern = () => {
           </div>
         </div>
 
-
+        <div className="flex items-center space-x-4">
+          <label className="text-sm font-medium w-32">Appreciation letter Download</label>
+          <div className="flex space-x-4">
+            <label className="flex items-center">
+              <input
+                type="radio"
+                checked={formData.canDownloadAppreciation}
+                onChange={() => handleDownloadPermissionChange('canDownloadAppreciation', true)}
+                className="mr-2"
+              />
+              Yes
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                checked={!formData.canDownloadAppreciation}
+                onChange={() => handleDownloadPermissionChange('canDownloadAppreciation', false)}
+                className="mr-2"
+              />
+              No
+            </label>
+          </div>
+        </div>
 
       </form>
     </div>

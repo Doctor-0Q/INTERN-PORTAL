@@ -16,6 +16,7 @@ const Documents = () => {
     const [internID, setInternID] = useState(null);
     const [downloadCertificate, setDownloadCertificate] = useState(false);
     const [downloadLOR, setDownloadLOR] = useState(false);
+    const [downloadAppreciation, setDownloadAppreciation] = useState(false);
 
     useEffect(() => {
 
@@ -69,6 +70,11 @@ const Documents = () => {
                     setDownloadLOR(true);
                 } else {
                     setDownloadLOR(false);
+                }
+                if (response.data.canDownloadAppreciation === "true") {
+                    setDownloadAppreciation(true);
+                } else {
+                    setDownloadAppreciation(false);
                 }
             } catch (error) {
                 console.error('Error fetching download permissions:', error);
@@ -205,7 +211,7 @@ Appreciation Certificate
                     <img src={certificateImg} alt="" className='w-[20vw] h-[17vw]'/>
                 </div>
                 </div>
-                {downloadCertificate && <div className='mt-[4%] flex flex-row gap-[30%] ml-[4%]'>
+                {downloadAppreciation && <div className='mt-[4%] flex flex-row gap-[30%] ml-[4%]'>
                     <Link to="/Appreciation-certificate" className='bg-transparent text-lg text-gray-800 font-semibold text-lg'>
                         View
                     </Link>

@@ -17,8 +17,10 @@ const EditIntern = () => {
     role: '',
     canDownloadCertificate: false,
     canDownloadLOR: false,
+    canDownloadAppreciation:false,
     position: '',
     department: '',
+    certificateId: '',
     projects: '',
     leaveDate:''
   });
@@ -58,6 +60,7 @@ const EditIntern = () => {
         status: response.data.status || '',
         role: response.data.role || '',
         performance: response.data.performance || '',
+        certificateId: response.data.certificateId || '',
         position: response.data.position || '',
         department: response.data.department || '',
         projects: response.data.projects || '',
@@ -127,6 +130,11 @@ const EditIntern = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const handleCertificateIdChange = (e) => {
+    const value = e.target.value;
+    setFormData(prev => ({ ...prev, certificateId: value }));
+  };
+
 
   
 
@@ -171,6 +179,8 @@ const EditIntern = () => {
       position: '',
       department: '',
       projects: '',
+      certificateId:'',
+      canDownloadAppreciation:false,
       canDownloadCertificate: false,
       canDownloadLOR: false,
     });
@@ -343,6 +353,20 @@ const EditIntern = () => {
             )}
           </div>
         </div>
+        {/* Certificate ID  */}
+        <div className="md:flex items-center space-x-4">
+          <label className="text-sm font-medium w-32">Certificate ID</label>
+          <div className="flex-1">
+            <input
+              type="text"
+              value={formData.certificateId}
+              onChange={handleCertificateIdChange}
+              className="md:w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter certificate ID"
+            />
+            
+          </div>
+        </div>
 
         {/* Download Permissions  */}
         <div className="flex items-center space-x-4">
@@ -386,6 +410,29 @@ const EditIntern = () => {
                 type="radio"
                 checked={!formData.canDownloadLOR}
                 onChange={() => handleDownloadPermissionChange('canDownloadLOR', false)}
+                className="mr-2"
+              />
+              No
+            </label>
+          </div>
+        </div>
+        <div className="flex items-center space-x-4">
+          <label className="text-sm font-medium w-32">Appreciation letter Download</label>
+          <div className="flex space-x-4">
+            <label className="flex items-center">
+              <input
+                type="radio"
+                checked={formData.canDownloadAppreciation}
+                onChange={() => handleDownloadPermissionChange('canDownloadAppreciation', true)}
+                className="mr-2"
+              />
+              Yes
+            </label>
+            <label className="flex items-center">
+              <input
+                type="radio"
+                checked={!formData.canDownloadAppreciation}
+                onChange={() => handleDownloadPermissionChange('canDownloadAppreciation', false)}
                 className="mr-2"
               />
               No
