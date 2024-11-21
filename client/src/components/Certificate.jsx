@@ -1,13 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import domtoimage from "dom-to-image-more";
 import { useLocation } from "react-router-dom";
-import certificateImg from '@/assets/CERTIFICATE-1.png'
+import certificateImg from '../assets/certificate-1.png'
 
 const Certificate = () => {
   const internName = localStorage.getItem("internName");
   const certificateId = localStorage.getItem("certificateId");
+  const [role, setRole] = useState(localStorage.getItem("role") || 'development');
   const location = useLocation();
   const currentDate = new Date().toLocaleDateString();
+
+  if(role.toLowerCase()==='web developer'){
+    setRole("Web development")
+  }
+  else if(role.toLowerCase()==='python developer'){
+    setRole("Python development")
+  }
+  else if(role.toLowerCase()==='app developer'){
+    setRole("App development")
+  }
 
   useEffect(() => {
     const nameElement = document.getElementById("name-placeholder");
@@ -70,15 +81,16 @@ const Certificate = () => {
         boxShadow: "none",
       }}
     >
-      <p className="border-transparent -mt-[240px] font-serif font-semi-bold text-5xl">{internName}</p>
-      <p className="w-full border-transparent font-sans text-lg ml-[590px] mt-[170px]">
+      <p className="border-transparent -mt-[305px] font-serif font-semi-bold text-5xl">{internName}</p>
+      <p className="w-[200px] border-transparent font-serif mt-[60px] ml-[230px] font-semi-bold text-md">{role}</p>
+      <p className="w-full border-transparent font-sans text-lg ml-[590px] mt-[90px]">
         {currentDate}
       </p>
-      <div className="border-transparent w-full flex justify-center mt-[50px] -mb-[500px]">
-    <p className="border-transparent font-sans text-sm">
+      <div className="border-transparent w-full flex justify-center mt-[70px] -mb-[570px]">
+    <p className="w-[150px] border-transparent font-sans text-[10px]">
       Certificate ID: {certificateId}
     </p>
-    </div>
+  </div>
 
     </div>
     <button
