@@ -6,9 +6,9 @@ import questionicon from "@/assets/questionicon.png";
 import NotificationModal from './AdminNotificationModal';
 import { useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
-import { API_URL } from "../../config/config";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { API_URL } from "config/config";
 
 const InternsDashboard = () => {
   const [toEmail, setEmail] = useState('');
@@ -516,7 +516,7 @@ const InternsDashboard = () => {
           ...
         </button>
         {showTwoOptions && selectedInternId === intern.internID && (
-              <div className="relative right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+              <div ref={optionsRef} className="relative right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                 <div className="py-1">
                   <button
                     onClick={() => navigate(`../edit-interns/${intern.internID}`)}
