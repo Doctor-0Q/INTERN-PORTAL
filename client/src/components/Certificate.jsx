@@ -78,6 +78,7 @@ const Certificate = () => {
     <p className="border-transparent font-sans text-sm">
       Certificate ID: {certificateId}
     </p>
+    </div>
 
     </div>
     <button
