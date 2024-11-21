@@ -1,11 +1,50 @@
  import { API_URL } from '../../config/config';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
 import { Search, Download, AlertCircle } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
 
 const EditIntern = () => {
+
+  const { internId } = useParams();
+  const location = useLocation();
+    
+    // Add this to your existing state
+    const fetchInternData = async (id) => {
+      try {
+          const response = await axios.get(`${API_URL}/api/v1/interns/${id}`);
+          if (response.data) {
+              setFormData({
+                  forename: response.data.forename || '',
+                  contactNo: response.data.contactNo || '',
+                  email: response.data.email || '',
+                  gender: response.data.gender || '',
+                  status: response.data.status || '',
+                  role: response.data.role || '',
+                  performance: response.data.performance || '',
+                  certificateId: response.data.certificateId || '',
+                  position: response.data.position || '',
+                  department: response.data.department || '',
+                  projects: response.data.projects || '',
+                  canDownloadCertificate: response.data.canDownloadCertificate,
+                  canDownloadLOR: response.data.canDownloadLOR,
+                  canDownloadAppreciation: response.data.canDownloadAppreciation
+              });
+          }
+      } catch (error) {
+          toast.error('Failed to fetch intern data');
+      }
+  };
+  
+  useEffect(() => {
+      if (internId) {
+          setInternId(internId);
+          fetchInternData(internId);
+      }
+  }, []);
+
   const [internID, setInternId] = useState('');
   const [formData, setFormData] = useState({
     forename: '',
