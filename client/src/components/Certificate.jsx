@@ -74,9 +74,10 @@ const Certificate = () => {
       <p className="w-full border-transparent font-sans text-lg ml-[590px] mt-[170px]">
         {currentDate}
       </p>
-      <p className="w-full border-transparent font-sans text-lg ml-[865px] mt-[50px] -mb-[500px]">
-        Certificate ID: {certificateId}
-      </p>
+      <div className="w-full flex justify-center mt-[50px] -mb-[500px]">
+    <p className="border-transparent font-sans text-sm">
+      Certificate ID: {certificateId}
+    </p>
 
     </div>
     <button
