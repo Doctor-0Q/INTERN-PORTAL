@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { API_URL } from "../../config/config";
+import { API_URL } from "config/config";
 
 const InternsDashboard = () => {
   const [toEmail, setEmail] = useState('');
@@ -93,23 +93,7 @@ const InternsDashboard = () => {
     fetchInterns();
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (optionsRef.current && !optionsRef.current.contains(event.target)) {
-        setTimeout(()=>{
-          setShowOptions(false);
-
-        },100)
-      }
-    };
-
-    
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [showTwoOptions]);
+  
 
   const initiateDelete = (internId) => {
     console.log('Deleting intern with ID:', internId);
@@ -162,7 +146,7 @@ const InternsDashboard = () => {
 
   const showOptions=(internId)=>{
     setSelectedInternId(internId);
-    setShowOptions(true);
+    setShowOptions(!showTwoOptions);
   }
 
   const showSearchbar=()=>{
@@ -401,13 +385,16 @@ const InternsDashboard = () => {
                 onClick={() => {
                   setShowDeleteModal(false);
                   setAdminCredentials({ username: "", password: "" });
+                  setShowOptions(false)
                 }}
                 className="px-4 py-2 bg-gray-300 rounded mr-2"
               >
                 Cancel
               </button>
               <button
-                onClick={handleDeleteConfirmation}
+                onClick={()=>{handleDeleteConfirmation();
+                  setShowOptions(false)
+                }}
                 className="px-4 py-2 bg-red-600 text-white rounded"
               >
                 Confirm Delete
@@ -520,6 +507,7 @@ const InternsDashboard = () => {
         </button>
         {showTwoOptions && selectedInternId === intern.internID && (
               <div 
+              id="outsideElement"
               onClick={()=>setShowOptions(false)}
               ref={optionsRef} className="relative right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                 <div className="py-1">
@@ -565,6 +553,7 @@ const InternsDashboard = () => {
         onClose={() => {
           setIsModalVisible(false);
           setSelectedEmail(null);
+          setShowOptions(false)
         }}
         toEmail={selectedEmail}
       />
