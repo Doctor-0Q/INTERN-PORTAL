@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import domtoimage from "dom-to-image-more";
 import { useLocation } from "react-router-dom";
-import signature from '@/assets/signatue2.png'
+import signature from '../assets/signatue2.png'
 
 const OfferLetterWebDeveloper = () => {
   const internName = localStorage.getItem("internName");
@@ -27,8 +27,8 @@ const OfferLetterWebDeveloper = () => {
     try {
       const dataUrl = await domtoimage.toJpeg(element, {
         quality: 0.95,
-        width: 550,
-        height: 850,
+        width: 650,
+        height: 1050,
         scale: 2,
         bgcolor: "#ffffff",
         style: {
@@ -59,7 +59,7 @@ const OfferLetterWebDeveloper = () => {
     <div className="flex justify-center items-center flex-col p-6 mt-[5%]">
       <div
         id="offer-letter-div"
-        className="w-[550px] h-[650px] bg-white p-6 border-white"
+        className="w-[650px] h-[1050px] bg-white p-6 border-white"
         style={{
           overflow: "hidden",
           border: "none",
@@ -75,27 +75,58 @@ const OfferLetterWebDeveloper = () => {
         
         <p className="mt-2 text-sm border-white">Dear {internName},</p>
         <p className="mt-3 text-sm border-white">
-        We are pleased to offer you the opportunity to join DOCQ as a Web Developer. We
-believe your skills and potential align well with our goals, and we are excited about
-the possibility of you contributing to our projects.
-
+        We are pleased to extend this offer to you for the position of Web Developer at DOC-Q. We
+are confident that your skills and expertise will contribute significantly to our ongoing
+projects and success.
         </p>
         
-        <p className="mt-5 border-white text-sm">
-        Benefits: This role offers invaluable experience and growth opportunities. Successful
-performance may lead to future full-time employment with a competitive salary,
-based on evaluation and availability.
-Your employment with DOCQ will be based on performance. We believe in rewarding
-excellence, and outstanding performance in this role may lead to further
-opportunities within our company.
+        <h4 className="mt-4 font-semibold text-sm border-white">Position Details:</h4>
+        <ul className="list-disc ml-8 mt-1  text-sm border-white">
+          <li className="border-white">Title: Web Developer</li>
+          <li className="border-white">Location: Remote</li>
+        </ul>
+
+        <h4 className="mt-4 font-semibold text-sm border-white">Responsibilities:</h4>
+        <p className="mt-1 text-sm border-white">
+        In this role, you will be responsible for developing, testing, and maintaining web
+applications that align with our project goals. You will collaborate closely with the team
+to enhance user experience and functionality.
+        </p>
+
+        <h4 className="mt-4 font-semibold text-sm border-white">Benefits and Growth Opportunities:</h4>
+        <p className="mt-1 text-sm border-white">
+        At DOC-Q, we value growth and potential. While this is an internship/contractual position,
+there are numerous opportunities for advancement, contingent on your performance.
+Here are some of the benefits you can expect:
+        </p>
+        <ul className="list-disc ml-8 mt-2 text-sm border-white">
+          <li className="border-white"><span className="border-white text-sm underline">
+          Experience and Learning:
+            </span> You will gain hands-on experience in a collaborative and
+innovative environment.
+</li>
+          <li className="border-white"><span className="border-white text-sm underline">
+          Growth Potential: 
+            </span>  Based on your performance, there may be opportunities for fulltime employment with a competitive salary package.</li>
+          <li className="border-white"><span className="border-white text-sm underline">
+          Skill Development:
+            </span> This role offers exposure to real-world projects and learning
+            opportunities in development, and other relevant fields</li>
+        </ul>
+
+        <h4 className="mt-4 font-semibold text-sm border-white">Evaluation and Future Opportunities:</h4>
+        <p className="mt-1 text-sm border-white">
+        Your employment with DOC-Q will be performance-driven. We are committed to fostering
+a culture that recognizes and rewards hard work. Based on your contributions, you could
+be considered for further roles and responsibilities within the company, as well as
+potential permanent employment.
 
         </p>
-        <p className="mt-5 border-white text-sm">
-        We are excited about the potential of having you join our team and are confident that
-your contributions will be instrumental in our success. We look forward to working
-with you and exploring future possibilities together.
 
-
+        <h4 className="mt-4 font-semibold text-sm border-white">Compensation:</h4>
+        <p className="mt-1 text-sm border-white">
+        Your compensation will be on the performance based, and further details on any
+additional payments will be discussed in your employment contract.
         </p>
         <div className="flex border-white">
           <div className="flex flex-col text-start w-[30%] ml-[60%] border-white">
@@ -105,6 +136,7 @@ with you and exploring future possibilities together.
           </div>
         
         </div>
+        
       </div>
 
       <button
