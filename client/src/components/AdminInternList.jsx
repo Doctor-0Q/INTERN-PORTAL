@@ -29,6 +29,7 @@ const InternsDashboard = () => {
   });
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
+  const optionsRef = useRef(null);
 
   const [showMessageBox, setShowMessageBox] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState(null);
@@ -94,12 +95,17 @@ const InternsDashboard = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!event.target.closest('.options-container')) {
+      if (optionsRef.current && !optionsRef.current.contains(event.target)) {
         setShowOptions(false);
       }
     };
+
+    
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const initiateDelete = (internId) => {
@@ -456,13 +462,13 @@ const InternsDashboard = () => {
           <td className="px-4 font-mukta py-2">{intern.completionDate || 'NA'}</td>
           <td className="px-4 font-mukta py-2 relative options-container">
             <button 
-              onClick={() => showOptions(intern.internID)} // Make sure to use _id instead of internID
+              onClick={() => showOptions(intern.internID)}
               className="px-2 py-1 font-mukta text-lg rounded-lg"
             >
               ...
             </button>
             {showTwoOptions && selectedInternId === intern.internID && (
-              <div className="relative right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+              <div ref={optionsRef} className="relative right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                 <div className="py-1">
                   <button
                     onClick={() => navigate(`../edit-interns/${intern.internID}`)}
