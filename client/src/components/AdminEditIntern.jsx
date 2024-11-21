@@ -151,7 +151,7 @@ const EditIntern = () => {
 
 
       // Update the intern data via the editIntern endpoint
-      const response = await axios.post(`http://localhost:8080/api/v1/editIntern/${internID}`, formData);
+      const response = await axios.post(`${API_URL}/api/v1/editIntern/${internID}`, formData);
 
       if (response.status !== 200) {
         toast.error("Failed to update details")
