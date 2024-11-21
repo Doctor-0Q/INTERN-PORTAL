@@ -3,6 +3,7 @@ import plusicon from "@/assets/plusicon.png";
 import searchicon from "@/assets/searchicon.png";
 import filtericon from "@/assets/filtericon.png";
 import questionicon from "@/assets/questionicon.png";
+import NotificationModal from './AdminNotificationModal';
 import { useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import { API_URL } from "../../config/config";
@@ -10,6 +11,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 
 const InternsDashboard = () => {
+  const [toEmail, setEmail] = useState('');
   const [interns, setInterns] = useState([]);
   const [filteredInterns, setFilteredInterns] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,6 +29,48 @@ const InternsDashboard = () => {
   });
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
+
+  const [showMessageBox, setShowMessageBox] = useState(false);
+  const [selectedEmail, setSelectedEmail] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const [selectedInterns, setSelectedInterns] = useState([]);
+  const [showBulkEmailButton, setShowBulkEmailButton] = useState(false);
+
+  const handleInternSelection = (internEmail) => {
+    setSelectedInterns(prevSelected => {
+      const newSelected = prevSelected.includes(internEmail)
+        ? prevSelected.filter(email => email !== internEmail)
+        : [...prevSelected, internEmail];
+      
+      // Update showBulkEmailButton based on whether any interns are selected
+      setShowBulkEmailButton(newSelected.length > 0);
+      
+      return newSelected;
+    });
+  };
+  
+
+  const handleBulkEmail = () => {
+    // Ensure emails are passed as an array
+    const emailArray = selectedInterns.map(email => email.trim());
+    setSelectedEmail(emailArray);
+    setIsModalVisible(true);
+  };
+
+  const showMessageModal = (selectedEmail) => {
+    handleSendEmail(selectedEmail);
+  };
+
+  const handleSendEmail = (email) => {
+    setSelectedEmail(email);
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowMessageBox(false);
+    setEmail('');
+  };
 
   useEffect(() => {
     const fetchInterns = async () => {
@@ -272,7 +316,7 @@ const InternsDashboard = () => {
       <h2 className="font-mukta text-xl font-normal mb-4">Interns Data</h2>
 
       <div className="flex md:flex-row flex-col h-auto md:h-16 justify-between bg-white items-center mb-4">
-        <h2 className="font-mukta text-xl font-medium ml-5 md:mt-0 mt-5">
+        <h2 className="font-mukta text-xl font-medium md:ml-5 md:mt-0 mt-5">
           Total Interns <span className="font-mukta text-slate-500">({filteredInterns.length})</span>
         </h2>
         
@@ -296,7 +340,7 @@ const InternsDashboard = () => {
         </button>
       )}
           </div>}
-          <div className="md:space-x-4 mr-5 flex items-center justify-center">
+          <div className="md:space-x-4 md:mr-5 flex items-center justify-center">
           <button>
           <img
           onClick={addIntern} src={plusicon} alt="Add Icon" className="" />
@@ -311,6 +355,14 @@ const InternsDashboard = () => {
           <button>
           <img src={questionicon} alt="More Info" className="" />
           </button>
+          {showBulkEmailButton && (
+            <button
+              onClick={handleBulkEmail}
+              className="bg-blue-900 text-white px-4 py-2 rounded-md ml-4"
+            >
+              Send Email
+            </button>
+          )}
           </div>
         </div>
       </div>
@@ -362,6 +414,17 @@ const InternsDashboard = () => {
   <table className="min-w-full table-auto border-collapse bg-white hidden md:table">
     <thead>
       <tr>
+        <th className="text-left px-4 py-2">
+        <input
+          type="checkbox"
+          onChange={(e) => {
+            const allEmails = currentInterns.map(intern => intern.email);
+            const newSelected = e.target.checked ? allEmails : [];
+            setSelectedInterns(newSelected);
+            setShowBulkEmailButton(newSelected.length > 0);
+          }}
+        />
+        </th>
         <th className="text-left font-mukta font-normal text-gray-500 px-4 py-2">Intern ID</th>
         <th className="text-left font-mukta font-normal text-gray-500 px-4 py-2">Name</th>
         <th className="text-left font-mukta font-normal text-gray-500 px-4 py-2">Role</th>
@@ -374,6 +437,13 @@ const InternsDashboard = () => {
     <tbody>
       {currentInterns.map((intern, index) => (
         <tr key={index} className="border-b">
+          <td className="px-4 py-2">
+        <input
+          type="checkbox"
+          checked={selectedInterns.includes(intern.email)}
+          onChange={() => handleInternSelection(intern.email)}
+        />
+      </td>
           <td className="px-4 font-mukta font-normal text-black py-2">{intern.internID}</td>
           <td className="px-4 font-mukta font-normal text-black py-2">{intern.forename}</td>
           <td className="px-4 font-mukta py-2">{intern.role}</td>
@@ -392,13 +462,19 @@ const InternsDashboard = () => {
               ...
             </button>
             {showTwoOptions && selectedInternId === intern.internID && (
-              <div className="fixed right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+              <div className="relative right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                 <div className="py-1">
                   <button
                     onClick={() => navigate(`../edit-interns/${intern.internID}`)}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   >
                     Edit Intern
+                  </button>
+                  <button
+                    onClick={() => showMessageModal(intern.email)}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Send Email
                   </button>
                   <button
                     onClick={() => initiateDelete(intern.internID)}
@@ -428,7 +504,35 @@ const InternsDashboard = () => {
         </p>
         <p className="font-mukta text-sm text-gray-500 mb-1"><strong>Year Of Joining:</strong> {formatDate(intern.dateOfJoining)}</p>
         <p className="font-mukta text-sm text-gray-500 mb-1"><strong>Completion Date:</strong> {intern.completionDate || 'NA'}</p>
-        <button className="px-2 py-1 font-mukta text-lg rounded-lg">...</button>
+        <button
+          onClick={() => showOptions(intern.internID)}
+          className="px-2 py-1 font-mukta text-lg rounded-lg">
+          ...
+        </button>
+        {showTwoOptions && selectedInternId === intern.internID && (
+              <div className="relative right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                <div className="py-1">
+                  <button
+                    onClick={() => navigate(`../edit-interns/${intern.internID}`)}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Edit Intern
+                  </button>
+                  <button
+                    onClick={() => showMessageModal(intern.email)}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Send Email
+                  </button>
+                  <button
+                    onClick={() => initiateDelete(intern.internID)}
+                    className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                  >
+                    Delete Intern
+                  </button>
+                </div>
+              </div>
+            )}
       </div>
     ))}
   </div>
@@ -443,6 +547,16 @@ const InternsDashboard = () => {
           <button className="next font-mukta py-2 px-3 hover:cursor-pointer" onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages}>Next &gt; </button>
         </div>
       </div>
+
+     {/* Your existing code */}
+     <NotificationModal 
+        visible={isModalVisible}
+        onClose={() => {
+          setIsModalVisible(false);
+          setSelectedEmail(null);
+        }}
+        toEmail={selectedEmail}
+      />
     </div>
   );
 };

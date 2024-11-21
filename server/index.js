@@ -5,6 +5,7 @@ import certificateRoute from './Routes/certificateRoute.js';
 import adminRoute from './Routes/adminRoute.js';
 import InternRoute from './Routes/intern.js';
 import SupportTicket from './Routes/createTicket.js'
+import notificationRoute from './Routes/notificationRoute.js';
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
 
@@ -27,6 +28,7 @@ app.use('/api/v1', certificateRoute);
 app.use('/api/v1', adminRoute);
 app.use('/api/v1', InternRoute);
 app.use('/api/v1', SupportTicket);
+app.use('/api/v1/sendNotification', notificationRoute);
 
 app.listen(port,()=>{
     console.log(`Connected to port ${port}`)
