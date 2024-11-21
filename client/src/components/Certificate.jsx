@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import domtoimage from "dom-to-image-more";
 import { useLocation } from "react-router-dom";
-import certificateImg from '../assets/certificate-1.png'
+import certificateImg from '@/assets/CERTIFICATE-1.png'
 
 const Certificate = () => {
   const internName = localStorage.getItem("internName");
