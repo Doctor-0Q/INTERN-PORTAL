@@ -93,7 +93,16 @@ const InternsDashboard = () => {
     fetchInterns();
   }, []);
 
-  
+  const handleMobileInternSelection = (internEmail) => {
+    setSelectedInterns(prevSelected => {
+      const newSelected = prevSelected.includes(internEmail)
+        ? prevSelected.filter(email => email !== internEmail)
+        : [...prevSelected, internEmail]; // Add to existing selection
+      
+      setShowBulkEmailButton(newSelected.length > 0);
+      return newSelected;
+    });
+  };
 
   const initiateDelete = (internId) => {
     console.log('Deleting intern with ID:', internId);
@@ -351,7 +360,7 @@ const InternsDashboard = () => {
           {showBulkEmailButton && (
             <button
               onClick={handleBulkEmail}
-              className="bg-blue-900 text-white px-4 py-2 rounded-md ml-4"
+              className="bg-blue-900 text-white px-2 py-1 text-xs md:px-4 md:py-2 rounded-md md:ml-4"
             >
               Send Email
             </button>
@@ -500,11 +509,18 @@ const InternsDashboard = () => {
         </p>
         <p className="font-mukta text-sm text-gray-500 mb-1"><strong>Year Of Joining:</strong> {formatDate(intern.dateOfJoining)}</p>
         <p className="font-mukta text-sm text-gray-500 mb-1"><strong>Completion Date:</strong> {intern.completionDate || 'NA'}</p>
-        <button
-          onClick={() => showOptions(intern.internID)}
-          className="px-2 py-1 font-mukta text-lg rounded-lg">
-          ...
-        </button>
+        <div className="flex flex-row justify-between">
+          <button
+            onClick={() => showOptions(intern.internID)}
+            className="px-2 py-1 font-mukta text-lg rounded-lg">
+            ...
+          </button>
+          <input
+            type="checkbox"
+            checked={selectedInterns.includes(intern.email)}
+            onChange={() => handleMobileInternSelection(intern.email)}
+          />
+        </div>
         {showTwoOptions && selectedInternId === intern.internID && (
               <div 
               id="outsideElement"
