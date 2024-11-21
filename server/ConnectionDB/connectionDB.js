@@ -5,6 +5,8 @@ dotenv.config();
 
 const MONGODB_URL = process.env.MONGODB_URL;
 
+mongoose.connection.setMaxListeners(15);
+
 const connectdb = async () => {
     try {
         await mongoose.connect(MONGODB_URL, {
