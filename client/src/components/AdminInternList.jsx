@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import toast from "react-hot-toast";
 import axios from "axios";
-import { API_URL } from "config/config";
+import { API_URL } from "../../config/config";
 
 const InternsDashboard = () => {
   const [toEmail, setEmail] = useState('');
