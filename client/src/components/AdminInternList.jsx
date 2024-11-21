@@ -96,7 +96,10 @@ const InternsDashboard = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (optionsRef.current && !optionsRef.current.contains(event.target)) {
-        setShowOptions(false);
+        setTimeout(()=>{
+          setShowOptions(false);
+
+        },100)
       }
     };
 
@@ -106,7 +109,7 @@ const InternsDashboard = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [showTwoOptions]);
 
   const initiateDelete = (internId) => {
     console.log('Deleting intern with ID:', internId);
@@ -468,7 +471,7 @@ const InternsDashboard = () => {
               ...
             </button>
             {showTwoOptions && selectedInternId === intern.internID && (
-              <div ref={optionsRef} className="relative right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+              <div className="relative right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                 <div className="py-1">
                   <button
                     onClick={() => navigate(`../edit-interns/${intern.internID}`)}
@@ -516,7 +519,9 @@ const InternsDashboard = () => {
           ...
         </button>
         {showTwoOptions && selectedInternId === intern.internID && (
-              <div ref={optionsRef} className="relative right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+              <div 
+              onClick={()=>setShowOptions(false)}
+              ref={optionsRef} className="relative right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
                 <div className="py-1">
                   <button
                     onClick={() => navigate(`../edit-interns/${intern.internID}`)}
