@@ -6,7 +6,7 @@ import { adminChangePass } from '../Controllers/adminChangePass.js';
 import { Members } from '../Controllers/AdminMembersList.js';
 import { deleteMembers } from '../Controllers/AdminDeleteMembers.js';
 import { deleteIntern } from '../Controllers/AdminDeleteIntern.js';
-
+import { updateDocumentAccess } from '../Controllers/updateDocumentAccess.js';
 
 const router = express.Router();
 
@@ -18,5 +18,6 @@ router.route('/member-list').get(Members);
 router.route('/member-list').post(Members);
 router.route('/delete-members').delete(deleteMembers);
 router.delete('/deleteIntern/:internId', deleteIntern);
+router.post('/updateDocumentAccess', updateDocumentAccess);
 
 export default router;

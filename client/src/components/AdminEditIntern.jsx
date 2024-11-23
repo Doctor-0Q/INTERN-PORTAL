@@ -1,14 +1,17 @@
  import { API_URL } from '../../config/config';
 import React, { useState, useEffect } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Search, Download, AlertCircle } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
+import DownloadPermissionModal from '@/components/DownloadPermissionModal';
 
 const EditIntern = () => {
 
   const { internId } = useParams();
+  const [showDocumentModal, setShowDocumentModal] = useState(false);
+  const [documentType, setDocumentType] = useState('');
+  const navigate = useNavigate();
   const location = useLocation();
     
     // Add this to your existing state
@@ -44,6 +47,41 @@ const EditIntern = () => {
           fetchInternData(internId);
       }
   }, []);
+
+  const handleCloseModal = () => {
+    setShowDocumentModal(false);
+    setDocumentType('');
+  };
+
+  const openDocumentModal = (type) => {
+    setDocumentType(type);
+    setShowDocumentModal(true);
+  };
+
+  useEffect(() => {
+    if (showDocumentModal) {
+      // Push a new state to prevent URL changes while modal is open
+      window.history.pushState(null, '', location.pathname);
+    }
+  }, [showDocumentModal]);
+  
+
+  const handleDocumentPermissionSave = async (selectedIds, type) => {
+  try {
+    const response = await axios.post(`${API_URL}/api/v1/updateDocumentAccess`, {
+      internIds: selectedIds,
+      documentType: type
+    });
+    
+    if (response.data.success) {
+      toast.success('Document access updated successfully');
+      handleCloseModal();
+    }
+  } catch (error) {
+    toast.error('Failed to update document access');
+    console.log('Error details:', error);
+  }
+};
 
   const [internID, setInternId] = useState('');
   const [formData, setFormData] = useState({
@@ -248,6 +286,21 @@ const EditIntern = () => {
             Save
           </button>
         </div>
+      </div>
+
+      <div className="flex mt-2 md:justify-center justify-start md:flex-row flex-col gap-4 mb-6">
+      <button 
+        onClick={() => openDocumentModal('appreciation')}
+        className="bg-blue-600 text-white px-4 py-2 rounded"
+      >
+        Appreciation Letter Access
+      </button>
+      <button 
+        onClick={() => openDocumentModal('lor')}
+        className="bg-blue-600 text-white px-4 py-2 rounded"
+      >
+        LOR Access
+      </button>
       </div>
     <form className="w-[210mm] min-h-[297mm] mx-auto md:p-8 bg-white md:shadow-lg"  >
       {/* Header with Title and Buttons */}
@@ -519,6 +572,13 @@ const EditIntern = () => {
 
       </div>
     </form>
+
+    <DownloadPermissionModal 
+      isOpen={showDocumentModal}
+      onClose={handleCloseModal}  // Now using our defined handler
+      type={documentType}
+      onSave={handleDocumentPermissionSave}
+    />
     </div>
   );
 };
