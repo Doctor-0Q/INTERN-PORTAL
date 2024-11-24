@@ -6,31 +6,34 @@ export const updateDocumentAccess = async (req, res) => {
     try {
       const { internIds, documentType } = req.body;
       
-      // First, remove access from all interns
-      await Intern.updateMany(
+      const fieldMap = {
+        certificate: 'canDownloadCertificate',
+        appreciation: 'canDownloadAppreciation',
+        lor: 'canDownloadLOR'
+      };
+
+      const updateField = fieldMap[documentType];
+
+      // First update - set all to false
+      const resetResult = await Intern.updateMany(
         {},
-        { 
-          [documentType === 'appreciation' 
-            ? 'canDownloadAppreciation' 
-            : 'canDownloadLOR']: false 
-        }
+        { [updateField]: false }
       );
-  
-      // Then, grant access to selected interns
-      await Intern.updateMany(
+
+      // Second update - set selected to true
+      const updateResult = await Intern.updateMany(
         { internID: { $in: internIds } },
-        { 
-          [documentType === 'appreciation' 
-            ? 'canDownloadAppreciation' 
-            : 'canDownloadLOR']: true 
-        }
+        { [updateField]: true }
       );
+      console.log('Update result:', updateResult);
+
   
       res.status(200).json({
         success: true,
         message: 'Document access updated successfully'
       });
     } catch (error) {
+      console.error('Update error:', error);
       res.status(500).json({
         success: false,
         message: 'Failed to update document access',
