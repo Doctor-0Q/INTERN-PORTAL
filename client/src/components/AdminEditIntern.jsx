@@ -321,13 +321,13 @@ const EditIntern = () => {
       >
         LOR Access
       </button>
-      <button 
+{/*       <button 
         type="button"
         onClick={() => openDocumentModal('certificate')}
         className="bg-blue-600 text-white px-4 py-2 rounded"
     >
         Certificate Download Access
-    </button>
+    </button> */}
       </div>
     <form className="w-[210mm] min-h-[297mm] mx-auto md:p-8 bg-white md:shadow-lg"  >
       {/* Header with Title and Buttons */}
