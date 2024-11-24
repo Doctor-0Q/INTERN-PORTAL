@@ -13,6 +13,10 @@ const EditIntern = () => {
   const [documentType, setDocumentType] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
+
+  const [errors, setErrors] = useState({
+    certificateId: ''
+  });
     
     // Add this to your existing state
     const fetchInternData = async (id) => {
@@ -68,6 +72,7 @@ const EditIntern = () => {
 
   const handleDocumentPermissionSave = async (selectedIds, type) => {
   try {
+    console.log('Saving permissions:', { selectedIds, type });
     const response = await axios.post(`${API_URL}/api/v1/updateDocumentAccess`, {
       internIds: selectedIds,
       documentType: type
@@ -205,11 +210,21 @@ const EditIntern = () => {
   
   const handleDownloadPermissionChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+
+    if (field === 'canDownloadCertificate' && !value) {
+      setErrors(prev => ({ ...prev, certificateId: '' }));
+    }
   };
 
   const handleCertificateIdChange = (e) => {
     const value = e.target.value;
     setFormData(prev => ({ ...prev, certificateId: value }));
+
+    if (formData.canDownloadCertificate && !value.trim()) {
+      setErrors(prev => ({ ...prev, certificateId: 'Certificate ID is required when certificate download is enabled' }));
+    } else {
+      setErrors(prev => ({ ...prev, certificateId: '' }));
+    }
   };
 
 
@@ -226,6 +241,11 @@ const EditIntern = () => {
   const handleSubmit = async () => {
     try {
 
+      if (formData.canDownloadCertificate && !formData.certificateId.trim()) {
+        setErrors(prev => ({ ...prev, certificateId: 'Certificate ID is required when certificate download is enabled' }));
+        toast.error('Please fill in all required fields');
+        return;
+      }
 
       // Update the intern data via the editIntern endpoint
       const response = await axios.post(`${API_URL}/api/v1/editIntern/${internID}`, formData);
@@ -301,6 +321,13 @@ const EditIntern = () => {
       >
         LOR Access
       </button>
+      <button 
+        type="button"
+        onClick={() => openDocumentModal('certificate')}
+        className="bg-blue-600 text-white px-4 py-2 rounded"
+    >
+        Certificate Download Access
+    </button>
       </div>
     <form className="w-[210mm] min-h-[297mm] mx-auto md:p-8 bg-white md:shadow-lg"  >
       {/* Header with Title and Buttons */}
@@ -447,16 +474,27 @@ const EditIntern = () => {
         </div>
         {/* Certificate ID  */}
         <div className="md:flex items-center space-x-4">
-          <label className="text-sm font-medium w-32">Certificate ID</label>
+          <label className="text-sm font-medium w-32">
+              Certificate ID
+              {formData.canDownloadCertificate && <span className="text-red-500">*</span>}
+            </label>
+
           <div className="flex-1">
             <input
               type="text"
               value={formData.certificateId}
               onChange={handleCertificateIdChange}
-              className="md:w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`md:w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                errors.certificateId ? 'border-red-500' : ''
+              }`}
               placeholder="Enter certificate ID"
             />
-            
+            {formData.canDownloadCertificate && (
+              <p className="text-red-500 text-xs mt-1">Certificate ID is mandatory</p>
+            )}
+            {errors.certificateId && (
+              <p className="text-red-500 text-sm mt-1">{errors.certificateId}</p>
+            )}
           </div>
         </div>
 
