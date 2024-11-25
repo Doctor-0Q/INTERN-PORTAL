@@ -1,4 +1,4 @@
- import { API_URL } from '../../config/config';
+import { API_URL } from '../../config/config';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Search, Download, AlertCircle } from 'lucide-react';
@@ -36,8 +36,8 @@ const EditIntern = () => {
                   department: response.data.department || '',
                   projects: response.data.projects || '',
                   canDownloadCertificate: response.data.canDownloadCertificate,
-                  canDownloadLOR: response.data.canDownloadLOR,
-                  canDownloadAppreciation: response.data.canDownloadAppreciation
+                  // canDownloadLOR: response.data.canDownloadLOR,
+                  // canDownloadAppreciation: response.data.canDownloadAppreciation
               });
           }
       } catch (error) {
@@ -98,8 +98,8 @@ const EditIntern = () => {
     performance: '',
     role: '',
     canDownloadCertificate: false,
-    canDownloadLOR: false,
-    canDownloadAppreciation:false,
+    // canDownloadLOR: false,
+    // canDownloadAppreciation:false,
     position: '',
     department: '',
     certificateId: '',
@@ -147,7 +147,7 @@ const EditIntern = () => {
         department: response.data.department || '',
         projects: response.data.projects || '',
         canDownloadCertificate: response.data.canDownloadCertificate,
-        canDownloadLOR: response.data.canDownloadLOR,
+        // canDownloadLOR: response.data.canDownloadLOR,
   
         // here for add (position,department,project)
       });
@@ -277,9 +277,9 @@ const EditIntern = () => {
       department: '',
       projects: '',
       certificateId:'',
-      canDownloadAppreciation:false,
+      // canDownloadAppreciation:false,
       canDownloadCertificate: false,
-      canDownloadLOR: false,
+      // canDownloadLOR: false,
     });
 
   };
@@ -308,27 +308,27 @@ const EditIntern = () => {
         </div>
       </div>
 
-      <div className="flex mt-2 md:justify-center justify-start md:flex-row flex-col gap-4 mb-6">
-      <button 
-        onClick={() => openDocumentModal('appreciation')}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
-      >
-        Appreciation Letter Access
-      </button>
-      <button 
-        onClick={() => openDocumentModal('lor')}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
-      >
-        LOR Access
-      </button>
-{/*       <button 
-        type="button"
-        onClick={() => openDocumentModal('certificate')}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
-    >
-        Certificate Download Access
-    </button> */}
-      </div>
+      {/* <div className="flex mt-2 md:justify-center justify-start md:flex-row flex-col gap-4 mb-6">
+        <button 
+          onClick={() => openDocumentModal('appreciation')}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Appreciation Letter Access
+        </button>
+        <button 
+          onClick={() => openDocumentModal('lor')}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          LOR Access
+        </button>
+        <button 
+          type="button"
+          onClick={() => openDocumentModal('certificate')}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+            Certificate Download Access
+        </button>
+      </div> */}
     <form className="w-[210mm] min-h-[297mm] mx-auto md:p-8 bg-white md:shadow-lg"  >
       {/* Header with Title and Buttons */}
 
@@ -505,7 +505,7 @@ const EditIntern = () => {
             <label className="flex items-center">
               <input
                 type="radio"
-                checked={formData.canDownloadCertificate}
+                checked={formData.canDownloadCertificate==="true"&&formData.canDownloadCertificate}
                 onChange={() => handleDownloadPermissionChange('canDownloadCertificate', true)}
                 className="mr-2"
               />
@@ -514,7 +514,7 @@ const EditIntern = () => {
             <label className="flex items-center">
               <input
                 type="radio"
-                checked={!formData.canDownloadCertificate}
+                checked={formData.canDownloadCertificate==="false"||!formData.canDownloadCertificate}
                 onChange={() => handleDownloadPermissionChange('canDownloadCertificate', false)}
                 className="mr-2"
               />
@@ -523,13 +523,13 @@ const EditIntern = () => {
           </div>
         </div>
 
-        <div className="flex items-center space-x-4">
+        {/* <div className="flex items-center space-x-4">
           <label className="text-sm font-medium w-32">LOR Download</label>
           <div className="flex space-x-4">
             <label className="flex items-center">
               <input
                 type="radio"
-                checked={formData.canDownloadLOR}
+                checked={formData.canDownloadLOR==="true"&&formData.canDownloadLOR}
                 onChange={() => handleDownloadPermissionChange('canDownloadLOR', true)}
                 className="mr-2"
               />
@@ -538,7 +538,7 @@ const EditIntern = () => {
             <label className="flex items-center">
               <input
                 type="radio"
-                checked={!formData.canDownloadLOR}
+                checked={formData.canDownloadLOR==="false"||!formData.canDownloadLOR}
                 onChange={() => handleDownloadPermissionChange('canDownloadLOR', false)}
                 className="mr-2"
               />
@@ -552,7 +552,7 @@ const EditIntern = () => {
             <label className="flex items-center">
               <input
                 type="radio"
-                checked={formData.canDownloadAppreciation}
+                checked={formData.canDownloadAppreciation==="true"&&formData.canDownloadAppreciation}
                 onChange={() => handleDownloadPermissionChange('canDownloadAppreciation', true)}
                 className="mr-2"
               />
@@ -561,14 +561,14 @@ const EditIntern = () => {
             <label className="flex items-center">
               <input
                 type="radio"
-                checked={!formData.canDownloadAppreciation}
+                checked={formData.canDownloadAppreciation==="false"||!formData.canDownloadAppreciation}
                 onChange={() => handleDownloadPermissionChange('canDownloadAppreciation', false)}
                 className="mr-2"
               />
               No
             </label>
           </div>
-        </div>
+        </div> */}
 
         <div className="md:flex items-center">
           <label className="w-48 text-sm">Working Department</label>

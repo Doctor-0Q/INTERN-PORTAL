@@ -9,6 +9,7 @@ import { FaTimes } from "react-icons/fa";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { API_URL } from "../../config/config";
+import DownloadPermissionModal from "@/components/DownloadPermissionModal"
 
 const InternsDashboard = () => {
   const [toEmail, setEmail] = useState('');
@@ -21,6 +22,8 @@ const InternsDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showBar,setShowBar]=useState(false)
   const [showTwoOptions, setShowOptions] = useState(false);
+  const [showDocumentModal, setShowDocumentModal] = useState(false);
+  const [documentType, setDocumentType] = useState('');
   const [selectedInternId, setSelectedInternId] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [adminCredentials, setAdminCredentials] = useState({
@@ -72,6 +75,42 @@ const InternsDashboard = () => {
     setShowMessageBox(false);
     setEmail('');
   };
+
+  const handleDocumentCloseModal = () => {
+    setShowDocumentModal(false);
+    setDocumentType('');
+  };
+
+  const openDocumentModal = (type) => {
+    setDocumentType(type);
+    setShowDocumentModal(true);
+  };
+
+  useEffect(() => {
+    if (showDocumentModal) {
+      // Push a new state to prevent URL changes while modal is open
+      window.history.pushState(null, '', location.pathname);
+    }
+  }, [showDocumentModal]);
+  
+
+  const handleDocumentPermissionSave = async (selectedIds, type) => {
+  try {
+    console.log('Saving permissions:', { selectedIds, type });
+    const response = await axios.post(`${API_URL}/api/v1/updateDocumentAccess`, {
+      internIds: selectedIds,
+      documentType: type
+    });
+    
+    if (response.data.success) {
+      toast.success('Document access updated successfully');
+      handleCloseModal();
+    }
+  } catch (error) {
+    toast.error('Failed to update document access');
+    console.log('Error details:', error);
+  }
+};
 
   useEffect(() => {
     const fetchInterns = async () => {
@@ -330,41 +369,49 @@ const InternsDashboard = () => {
             value={searchTerm}
             onChange={handleSearch}
             placeholder="Search interns..."
-            className="border border-gray-300 rounded-md py-1 md:py-2 px-1 md:px-3 md:w-52 font-mukta"
+            className="border border-gray-300 ml-[20%] rounded-md py-1 md:py-2 px-1 md:px-3 md:w-52 font-mukta"
           />
           {searchTerm && (
-        <button
-          onClick={clearSearch}
-          className="absolute right-2 top-3 text-gray-500"
-          aria-label="Clear search"
-        >
-          <FaTimes />
-        </button>
-      )}
-          </div>}
-          <div className="md:space-x-4 md:mr-5 flex items-center justify-center">
-          <button>
-          <img
-          onClick={addIntern} src={plusicon} alt="Add Icon" className="" />
-          </button>
-          <button>
-          <img
-          onClick={showSearchbar} src={searchicon} alt="Search Icon" className="" />
-          </button>
-          <button>
-          <img src={filtericon} alt="Filter Icon" className="" />
-          </button>
-          <button>
-          <img src={questionicon} alt="More Info" className="" />
-          </button>
-          {showBulkEmailButton && (
             <button
-              onClick={handleBulkEmail}
-              className="bg-blue-900 text-white px-2 py-1 text-xs md:px-4 md:py-2 rounded-md md:ml-4"
+              onClick={clearSearch}
+              className="absolute right-2 top-3 text-gray-500"
+              aria-label="Clear search"
             >
-              Send Email
+              <FaTimes />
             </button>
           )}
+          </div>}
+          <div className="md:space-x-4 md:mr-5 flex items-center justify-center md:flex-row flex-col">
+            <div className={`flex flex-row gap-2 ${showBar?`mt-4`:`mt-0`} md:mt-0 mx-auto`}>
+              <button>
+              <img
+              onClick={addIntern} src={plusicon} alt="Add Icon" className="" />
+              </button>
+              <button>
+              <img
+              onClick={showSearchbar} src={searchicon} alt="Search Icon" className="" />
+              </button>
+              <button className="bg-slate-50 border-[1px] border-slate-300 text-black px-2 py-1 text-[10px] md:text-xs md:px-2 md:py-1 rounded-md"
+              onClick={() => openDocumentModal('appreciation')}
+              >
+                Appreciation <br />Letter Access
+              </button>
+              <button className="bg-slate-50 border-[1px] border-slate-300 text-black px-2 py-1 text-[10px] md:text-xs md:px-2 md:py-1 rounded-md"
+              onClick={() => openDocumentModal('lor')}
+              >
+                LOR <br /> Access
+              </button>
+            </div>
+            <div>
+              {showBulkEmailButton && (
+                <button
+                  onClick={handleBulkEmail}
+                  className="bg-blue-900 text-white px-2 py-1 text-xs md:px-4 md:py-2 rounded-md mt-2 md:mt-0"
+                >
+                  Send Email
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -454,7 +501,7 @@ const InternsDashboard = () => {
           <td className="px-4 font-mukta py-2">{intern.role}</td>
           <td className="px-4 font-mukta py-2">
             <span className={`w-[90px] font-mukta inline-flex items-center justify-center px-3 py-1 rounded-full text-sm ${getStatusClass(intern.status)}`}>
-              {intern.status}
+              {intern.status?intern.status:"N/A"}
             </span>
           </td>
           <td className="px-4 font-mukta py-2">{formatDate(intern.dateOfJoining)}</td>
@@ -504,7 +551,7 @@ const InternsDashboard = () => {
         <p className="font-mukta text-sm text-gray-500 mb-1"><strong>Role:</strong> {intern.role}</p>
         <p className="font-mukta text-sm text-gray-500 mb-1"><strong>Status:</strong>
           <span className={`w-[90px] font-mukta inline-flex items-center justify-center px-3 py-1 rounded-full text-sm ${getStatusClass(intern.status)}`}>
-            {intern.status}
+            {intern.status?intern.status:"N/A"}
           </span>
         </p>
         <p className="font-mukta text-sm text-gray-500 mb-1"><strong>Year Of Joining:</strong> {formatDate(intern.dateOfJoining)}</p>
@@ -573,6 +620,13 @@ const InternsDashboard = () => {
         }}
         toEmail={selectedEmail}
       />
+
+      <DownloadPermissionModal 
+        isOpen={showDocumentModal}
+        onClose={handleDocumentCloseModal}  // Now using our defined handler
+        type={documentType}
+        onSave={handleDocumentPermissionSave}
+      />
     </div>
   );
 };
@@ -587,6 +641,16 @@ const getStatusClass = (status) => {
     case "Terminated":
       return "bg-red-100 text-red-500";
     case "On Leave":
+      return "bg-yellow-100 text-yellow-500";
+      case "working":
+        return "bg-green-100 text-green-500";
+      case "left":
+        return "bg-blue-100 text-blue-400";
+      case "terminated":
+        return "bg-red-100 text-red-500";
+      case "on leave":
+        return "bg-yellow-100 text-yellow-500";
+      case "On leave":
       return "bg-yellow-100 text-yellow-500";
     default:
       return "bg-gray-100 text-gray-500";
