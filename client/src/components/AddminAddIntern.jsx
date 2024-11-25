@@ -16,9 +16,9 @@ const AddminAddIntern = () => {
     performance: '',
     role: '',
     certificateId: '',
-    canDownloadAppreciation:false,
+    // canDownloadAppreciation:false,
     canDownloadCertificate: false,
-    canDownloadLOR: false,
+    // canDownloadLOR: false,
     
   });
 
@@ -111,6 +111,12 @@ const AddminAddIntern = () => {
       setErrors((prev) => ({ ...prev, performance: 'Performance rating is required' }));
     }
 
+    if (formData.canDownloadCertificate && !formData.certificateId.trim()) {
+      setErrors(prev => ({ ...prev, certificateId: 'Certificate ID is required when certificate download is enabled' }));
+      toast.error('Please fill in all required fields');
+      return;
+    }
+
 
     if (isEmailValid && isPerformanceValid) {
       try {
@@ -151,7 +157,7 @@ const AddminAddIntern = () => {
       role: '',
       certificateId: '',
       canDownloadCertificate: false,
-      canDownloadLOR: false,
+      // canDownloadLOR: false,
       
     });
     setErrors({
@@ -383,15 +389,22 @@ const AddminAddIntern = () => {
 
         {/* Certificate ID  */}
         <div className="md:flex items-center space-x-4">
-          <label className="text-sm font-medium w-32">Certificate ID</label>
+          <label className="text-sm font-medium w-32">Certificate ID
+          {formData.canDownloadCertificate && <span className="text-red-500">*</span>}
+          </label>
           <div className="flex-1">
             <input
               type="text"
               value={formData.certificateId}
               onChange={handleCertificateIdChange}
-              className="md:w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`md:w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                errors.certificateId ? 'border-red-500' : ''
+              }`}
               placeholder="Enter certificate ID"
             />
+            {formData.canDownloadCertificate && (
+              <p className="text-red-500 text-xs mt-1">Certificate ID is mandatory</p>
+            )}
             {errors.certificateId && (
               <div className="text-red-500 text-sm mt-1 flex items-center">
                 <AlertCircle size={16} className="mr-1" />
@@ -426,7 +439,7 @@ const AddminAddIntern = () => {
           </div>
         </div>
 
-        <div className="flex items-center space-x-4">
+        {/* <div className="flex items-center space-x-4">
           <label className="text-sm font-medium w-32">LOR Download</label>
           <div className="flex space-x-4">
             <label className="flex items-center">
@@ -472,7 +485,7 @@ const AddminAddIntern = () => {
               No
             </label>
           </div>
-        </div>
+        </div> */}
 
       </form>
     </div>
