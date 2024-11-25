@@ -369,7 +369,7 @@ const InternsDashboard = () => {
             value={searchTerm}
             onChange={handleSearch}
             placeholder="Search interns..."
-            className="border border-gray-300 ml-[20%] rounded-md py-1 md:py-2 px-1 md:px-3 md:w-52 font-mukta"
+            className="border border-gray-300 md:ml-0 ml-[20%] rounded-md py-1 md:py-2 px-1 md:px-3 md:w-52 font-mukta"
           />
           {searchTerm && (
             <button
