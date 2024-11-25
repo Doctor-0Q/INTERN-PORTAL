@@ -476,7 +476,7 @@ const EditIntern = () => {
         <div className="md:flex items-center space-x-4">
           <label className="text-sm font-medium w-32">
               Certificate ID
-              {formData.canDownloadCertificate && <span className="text-red-500">*</span>}
+              {String(formData.canDownloadCertificate)==="true" && <span className="text-red-500">*</span>}
             </label>
 
           <div className="flex-1">
@@ -489,7 +489,7 @@ const EditIntern = () => {
               }`}
               placeholder="Enter certificate ID"
             />
-            {formData.canDownloadCertificate && (
+            {String(formData.canDownloadCertificate)==="true" && (
               <p className="text-red-500 text-xs mt-1">Certificate ID is mandatory</p>
             )}
             {errors.certificateId && (
@@ -505,7 +505,7 @@ const EditIntern = () => {
             <label className="flex items-center">
               <input
                 type="radio"
-                checked={formData.canDownloadCertificate==="true"&&formData.canDownloadCertificate}
+                checked={String(formData.canDownloadCertificate)==="true"}
                 onChange={() => handleDownloadPermissionChange('canDownloadCertificate', true)}
                 className="mr-2"
               />
@@ -514,7 +514,7 @@ const EditIntern = () => {
             <label className="flex items-center">
               <input
                 type="radio"
-                checked={formData.canDownloadCertificate==="false"||!formData.canDownloadCertificate}
+                checked={String(formData.canDownloadCertificate)==="false"}
                 onChange={() => handleDownloadPermissionChange('canDownloadCertificate', false)}
                 className="mr-2"
               />
