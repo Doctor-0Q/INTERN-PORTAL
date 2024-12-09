@@ -42,13 +42,13 @@ const Documents = () => {
             const storedRole = localStorage.getItem('role');
             if (storedRole) {
                 setRole(storedRole.trim().toLowerCase()); 
-                 if (storedRole === "web developer") {
+                 if (storedRole === "web developer" || storedRole === "web-developer") {
                     console.log("Role:", storedRole);
                     setOfferLetterPath("/view-OfferLetter-Web-Developer");
-                } else if (storedRole === "app developer") {
+                } else if (storedRole === "app developer" || storedRole === "app-developer") {
                     console.log("Role:", storedRole);
                     setOfferLetterPath("/view-OfferLetter");
-                } else if (storedRole === "python developer") {
+                } else if (storedRole === "python developer" || storedRole === "python-developer") {
                     console.log("Role:", storedRole);
                     setOfferLetterPath("/view-OfferLetter-Python-Developer");
                 }else{
