@@ -1,11 +1,93 @@
- import { API_URL } from '../../config/config';
-import React, { useState } from 'react';
+import { API_URL } from '../../config/config';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Search, Download, AlertCircle } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-
+import DownloadPermissionModal from '@/components/DownloadPermissionModal';
 
 const EditIntern = () => {
+
+  const { internId } = useParams();
+  const [showDocumentModal, setShowDocumentModal] = useState(false);
+  const [documentType, setDocumentType] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [errors, setErrors] = useState({
+    certificateId: ''
+  });
+    
+    // Add this to your existing state
+    const fetchInternData = async (id) => {
+      try {
+          const response = await axios.get(`${API_URL}/api/v1/interns/${id}`);
+          if (response.data) {
+              setFormData({
+                  forename: response.data.forename || '',
+                  contactNo: response.data.contactNo || '',
+                  email: response.data.email || '',
+                  gender: response.data.gender || '',
+                  status: response.data.status || '',
+                  role: response.data.role || '',
+                  performance: response.data.performance || '',
+                  certificateId: response.data.certificateId || '',
+                  position: response.data.position || '',
+                  department: response.data.department || '',
+                  projects: response.data.projects || '',
+                  canDownloadCertificate: response.data.canDownloadCertificate,
+                  // canDownloadLOR: response.data.canDownloadLOR,
+                  // canDownloadAppreciation: response.data.canDownloadAppreciation
+              });
+          }
+      } catch (error) {
+          toast.error('Failed to fetch intern data');
+      }
+  };
+  
+  useEffect(() => {
+      if (internId) {
+          setInternId(internId);
+          fetchInternData(internId);
+      }
+  }, []);
+
+  const handleCloseModal = () => {
+    setShowDocumentModal(false);
+    setDocumentType('');
+  };
+
+  const openDocumentModal = (type) => {
+    setDocumentType(type);
+    setShowDocumentModal(true);
+  };
+
+  useEffect(() => {
+    if (showDocumentModal) {
+      // Push a new state to prevent URL changes while modal is open
+      window.history.pushState(null, '', location.pathname);
+    }
+  }, [showDocumentModal]);
+  
+
+  const handleDocumentPermissionSave = async (selectedIds, type) => {
+  try {
+    console.log('Saving permissions:', { selectedIds, type });
+    const response = await axios.post(`${API_URL}/api/v1/updateDocumentAccess`, {
+      internIds: selectedIds,
+      documentType: type
+    });
+    
+    if (response.data.success) {
+      toast.success('Document access updated successfully');
+      handleCloseModal();
+    }
+  } catch (error) {
+    toast.error('Failed to update document access');
+    console.log('Error details:', error);
+  }
+};
+
   const [internID, setInternId] = useState('');
   const [formData, setFormData] = useState({
     forename: '',
@@ -16,8 +98,8 @@ const EditIntern = () => {
     performance: '',
     role: '',
     canDownloadCertificate: false,
-    canDownloadLOR: false,
-    canDownloadAppreciation:false,
+    // canDownloadLOR: false,
+    // canDownloadAppreciation:false,
     position: '',
     department: '',
     certificateId: '',
@@ -65,7 +147,7 @@ const EditIntern = () => {
         department: response.data.department || '',
         projects: response.data.projects || '',
         canDownloadCertificate: response.data.canDownloadCertificate,
-        canDownloadLOR: response.data.canDownloadLOR,
+        // canDownloadLOR: response.data.canDownloadLOR,
   
         // here for add (position,department,project)
       });
@@ -128,11 +210,21 @@ const EditIntern = () => {
   
   const handleDownloadPermissionChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+
+    if (field === 'canDownloadCertificate' && !value) {
+      setErrors(prev => ({ ...prev, certificateId: '' }));
+    }
   };
 
   const handleCertificateIdChange = (e) => {
     const value = e.target.value;
     setFormData(prev => ({ ...prev, certificateId: value }));
+
+    if (formData.canDownloadCertificate && !value.trim()) {
+      setErrors(prev => ({ ...prev, certificateId: 'Certificate ID is required when certificate download is enabled' }));
+    } else {
+      setErrors(prev => ({ ...prev, certificateId: '' }));
+    }
   };
 
 
@@ -149,6 +241,11 @@ const EditIntern = () => {
   const handleSubmit = async () => {
     try {
 
+      if (formData.canDownloadCertificate && !formData.certificateId.trim()) {
+        setErrors(prev => ({ ...prev, certificateId: 'Certificate ID is required when certificate download is enabled' }));
+        toast.error('Please fill in all required fields');
+        return;
+      }
 
       // Update the intern data via the editIntern endpoint
       const response = await axios.post(`${API_URL}/api/v1/editIntern/${internID}`, formData);
@@ -180,9 +277,9 @@ const EditIntern = () => {
       department: '',
       projects: '',
       certificateId:'',
-      canDownloadAppreciation:false,
+      // canDownloadAppreciation:false,
       canDownloadCertificate: false,
-      canDownloadLOR: false,
+      // canDownloadLOR: false,
     });
 
   };
@@ -210,6 +307,28 @@ const EditIntern = () => {
           </button>
         </div>
       </div>
+
+      {/* <div className="flex mt-2 md:justify-center justify-start md:flex-row flex-col gap-4 mb-6">
+        <button 
+          onClick={() => openDocumentModal('appreciation')}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Appreciation Letter Access
+        </button>
+        <button 
+          onClick={() => openDocumentModal('lor')}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          LOR Access
+        </button>
+        <button 
+          type="button"
+          onClick={() => openDocumentModal('certificate')}
+          className="bg-blue-600 text-white px-4 py-2 rounded"
+        >
+            Certificate Download Access
+        </button>
+      </div> */}
     <form className="w-[210mm] min-h-[297mm] mx-auto md:p-8 bg-white md:shadow-lg"  >
       {/* Header with Title and Buttons */}
 
@@ -355,16 +474,27 @@ const EditIntern = () => {
         </div>
         {/* Certificate ID  */}
         <div className="md:flex items-center space-x-4">
-          <label className="text-sm font-medium w-32">Certificate ID</label>
+          <label className="text-sm font-medium w-32">
+              Certificate ID
+              {String(formData.canDownloadCertificate)==="true" && <span className="text-red-500">*</span>}
+            </label>
+
           <div className="flex-1">
             <input
               type="text"
               value={formData.certificateId}
               onChange={handleCertificateIdChange}
-              className="md:w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`md:w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                errors.certificateId ? 'border-red-500' : ''
+              }`}
               placeholder="Enter certificate ID"
             />
-            
+            {String(formData.canDownloadCertificate)==="true" && (
+              <p className="text-red-500 text-xs mt-1">Certificate ID is mandatory</p>
+            )}
+            {errors.certificateId && (
+              <p className="text-red-500 text-sm mt-1">{errors.certificateId}</p>
+            )}
           </div>
         </div>
 
@@ -375,7 +505,7 @@ const EditIntern = () => {
             <label className="flex items-center">
               <input
                 type="radio"
-                checked={formData.canDownloadCertificate}
+                checked={String(formData.canDownloadCertificate)==="true"}
                 onChange={() => handleDownloadPermissionChange('canDownloadCertificate', true)}
                 className="mr-2"
               />
@@ -384,7 +514,7 @@ const EditIntern = () => {
             <label className="flex items-center">
               <input
                 type="radio"
-                checked={!formData.canDownloadCertificate}
+                checked={String(formData.canDownloadCertificate)==="false"}
                 onChange={() => handleDownloadPermissionChange('canDownloadCertificate', false)}
                 className="mr-2"
               />
@@ -393,13 +523,13 @@ const EditIntern = () => {
           </div>
         </div>
 
-        <div className="flex items-center space-x-4">
+        {/* <div className="flex items-center space-x-4">
           <label className="text-sm font-medium w-32">LOR Download</label>
           <div className="flex space-x-4">
             <label className="flex items-center">
               <input
                 type="radio"
-                checked={formData.canDownloadLOR}
+                checked={formData.canDownloadLOR==="true"&&formData.canDownloadLOR}
                 onChange={() => handleDownloadPermissionChange('canDownloadLOR', true)}
                 className="mr-2"
               />
@@ -408,7 +538,7 @@ const EditIntern = () => {
             <label className="flex items-center">
               <input
                 type="radio"
-                checked={!formData.canDownloadLOR}
+                checked={formData.canDownloadLOR==="false"||!formData.canDownloadLOR}
                 onChange={() => handleDownloadPermissionChange('canDownloadLOR', false)}
                 className="mr-2"
               />
@@ -422,7 +552,7 @@ const EditIntern = () => {
             <label className="flex items-center">
               <input
                 type="radio"
-                checked={formData.canDownloadAppreciation}
+                checked={formData.canDownloadAppreciation==="true"&&formData.canDownloadAppreciation}
                 onChange={() => handleDownloadPermissionChange('canDownloadAppreciation', true)}
                 className="mr-2"
               />
@@ -431,14 +561,14 @@ const EditIntern = () => {
             <label className="flex items-center">
               <input
                 type="radio"
-                checked={!formData.canDownloadAppreciation}
+                checked={formData.canDownloadAppreciation==="false"||!formData.canDownloadAppreciation}
                 onChange={() => handleDownloadPermissionChange('canDownloadAppreciation', false)}
                 className="mr-2"
               />
               No
             </label>
           </div>
-        </div>
+        </div> */}
 
         <div className="md:flex items-center">
           <label className="w-48 text-sm">Working Department</label>
@@ -480,6 +610,13 @@ const EditIntern = () => {
 
       </div>
     </form>
+
+    <DownloadPermissionModal 
+      isOpen={showDocumentModal}
+      onClose={handleCloseModal}  // Now using our defined handler
+      type={documentType}
+      onSave={handleDocumentPermissionSave}
+    />
     </div>
   );
 };
