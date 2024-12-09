@@ -27,6 +27,7 @@ const Login = () => {
         localStorage.setItem('dateOfJoining',response.data.dateOfJoining);
         localStorage.setItem('role',response.data.role);
         localStorage.setItem('role',response.data.role);
+        localStorage.setItem('leaveDate',response.data.leaveDate);
         toast.success("Login success")
         navigate(`../`);
       }
