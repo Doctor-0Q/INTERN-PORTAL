@@ -6,7 +6,7 @@ import certificateImg from '@/assets/CERTIFICATE-1.png'
 const Certificate = () => {
   const internName = localStorage.getItem("internName");
   const certificateId = localStorage.getItem("certificateId");
-  const leaveDate = localStorage.getItem("leaveDate");
+  const leaveDate = localStorage.getItem("leaveDate") || "No date";
   const [role, setRole] = useState(localStorage.getItem("role") || 'development');
   const location = useLocation();
 
