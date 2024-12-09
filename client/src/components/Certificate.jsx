@@ -6,9 +6,9 @@ import certificateImg from '@/assets/CERTIFICATE-1.png'
 const Certificate = () => {
   const internName = localStorage.getItem("internName");
   const certificateId = localStorage.getItem("certificateId");
+  const leaveDate = localStorage.getItem("leaveDate");
   const [role, setRole] = useState(localStorage.getItem("role") || 'development');
   const location = useLocation();
-  const currentDate = new Date().toLocaleDateString();
 
   if(role.toLowerCase()==='web developer'){
     setRole("Web development")
@@ -22,18 +22,16 @@ const Certificate = () => {
 
   useEffect(() => {
     const nameElement = document.getElementById("name-placeholder");
-    const dateElement = document.getElementById("date-placeholder");
 
-    if (nameElement && dateElement) {
+    if (nameElement) {
       nameElement.textContent = internName;
-      dateElement.textContent = currentDate;
     }
 
     const params = new URLSearchParams(location.search);
     if (params.get("download") === "true") {
       handleDownload();
     }
-  }, [internName, currentDate]);
+  }, [internName]);
 
   const handleDownload = async () => {
     const element = document.getElementById("certificate-div");
@@ -83,11 +81,11 @@ const Certificate = () => {
     >
       <p className="w-full text-center border-transparent -mt-[305px] font-serif font-semi-bold text-5xl">{internName}</p>
       <p className="w-[200px] border-transparent font-serif mt-[58px] ml-[228px] font-arimo text-gray-500 text-md">{role}</p>
-      <p className="w-full border-transparent font-sans text-lg ml-[590px] mt-[90px]">
-        {currentDate}
+      <p className="w-full border-transparent font-sans text-md ml-[590px] mt-[90px]">
+        {leaveDate}
       </p>
       <div className="border-transparent w-full flex justify-center mt-[70px] -mb-[570px]">
-    <p className="w-[150px] border-transparent font-sans text-[10px]">
+    <p className="w-full text-center border-transparent font-sans text-[10px]">
       Certificate ID: {certificateId}
     </p>
   </div>
