@@ -81,8 +81,8 @@ const Certificate = () => {
         boxShadow: "none",
       }}
     >
-      <p className="border-transparent -mt-[305px] font-serif font-semi-bold text-5xl">{internName}</p>
-      <p className="w-[200px] border-transparent font-serif mt-[60px] ml-[230px] font-semi-bold text-md">{role}</p>
+      <p className="w-full text-center border-transparent -mt-[305px] font-serif font-semi-bold text-5xl">{internName}</p>
+      <p className="w-[200px] border-transparent font-serif mt-[58px] ml-[228px] font-arimo text-gray-500 text-md">{role}</p>
       <p className="w-full border-transparent font-sans text-lg ml-[590px] mt-[90px]">
         {currentDate}
       </p>

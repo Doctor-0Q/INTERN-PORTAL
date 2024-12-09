@@ -7,6 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        arimo: ['Arimo', 'sans-serif'],
         geologica: ['Geologica', 'sans-serif'],
         kantumruy: ['Kantumruy', 'sans-serif'],
         mukta: ['Mukta','sans-serif'],
