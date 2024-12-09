@@ -498,6 +498,18 @@ const EditIntern = () => {
           </div>
         </div>
 
+         {/* Date of Leaving */}
+    <div className="flex md:items-center flex-col md:flex-row">
+      <label className="w-48 text-sm">Date of Leaving</label>
+      <input
+        type="date"
+        name="leaveDate"
+        value={formData.leaveDate}
+        onChange={handleInputChange}
+        className="w-[70vw] flex-1 border rounded px-2 py-1"
+      />
+    </div>
+
         {/* Download Permissions  */}
         <div className="flex items-center space-x-4">
           <label className="text-sm font-medium w-32">Certificate Download</label>
