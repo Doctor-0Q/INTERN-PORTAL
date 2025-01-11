@@ -30,8 +30,8 @@ const LOR = () => {
     try {
       const dataUrl = await domtoimage.toJpeg(element, {
         quality: 0.95,
-        width: 690,
-        height: 1000,
+        width: 720,
+        height: 1050,
         bgcolor: "#ffffff",
       });
       const link = document.createElement("a");
@@ -47,7 +47,7 @@ const LOR = () => {
     <div className="flex justify-center items-center flex-col p-6 mt-10 border-white">
       <div
         id="lor-div"
-        className="w-[690px] h-[1000px] bg-white border-white pl-[4vw] p-10 shadow-lg relative"
+        className="w-[720px] h-[1050px] bg-white border-white pl-[4vw] p-10 shadow-lg relative"
         style={{ fontFamily: "Arial, sans-serif",
              backgroundImage: `url(${background})`, 
           backgroundSize: "cover",
@@ -95,7 +95,7 @@ const LOR = () => {
         </p>
 
         {/* Footer */}
-        <div className="flex mt-[7vw] border-white">
+        <div className="flex mt-[4vw] border-white">
 
         
         <div className="flex w-full flex-col border-white">
