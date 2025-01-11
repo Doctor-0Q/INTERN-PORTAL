@@ -10,15 +10,34 @@ const Certificate = () => {
   const [role, setRole] = useState(localStorage.getItem("role") || 'development');
   const location = useLocation();
 
-  if(role.toLowerCase()==='web developer'){
+  if(role.toLowerCase()==='web-developer'){
     setRole("Web development")
   }
-  else if(role.toLowerCase()==='python developer'){
+  else if(role.toLowerCase()==='python-developer'){
     setRole("Python development")
   }
-  else if(role.toLowerCase()==='app developer'){
+  else if(role.toLowerCase()==='app-developer'){
     setRole("App development")
   }
+  else if(role.toLowerCase()==='hr'){
+    setRole("Hr Manager")
+  }
+
+  useEffect(()=>{
+    if(role.toLowerCase()==='web-developer'){
+      setRole("Web development")
+    }
+    else if(role.toLowerCase()==='python-developer'){
+      setRole("Python development")
+    }
+    else if(role.toLowerCase()==='app-developer'){
+      setRole("App development")
+    }
+    else if(role.toLowerCase()==='hr'){
+      setRole("Hr Department")
+      setMarginLeft('250px')
+    }
+  },[])
 
   useEffect(() => {
     const nameElement = document.getElementById("name-placeholder");
@@ -79,9 +98,18 @@ const Certificate = () => {
         boxShadow: "none",
       }}
     >
-      <p className="w-full text-center border-transparent -mt-[305px] font-serif font-semi-bold text-5xl">{internName}</p>
-      <p className="w-[200px] border-transparent font-serif mt-[58px] ml-[228px] font-arimo text-gray-500 text-md">{role}</p>
-      <p className="w-full border-transparent font-sans text-md ml-[590px] mt-[90px]">
+      <p className="w-full text-center border-transparent -mt-[315px] font-serif font-semi-bold text-5xl">{internName}</p>
+      <p className={`w-[555px] bg-white border-transparent font-serif mt-[60px]  font-arimo text-gray-500 text-md text-center`}>has successfully completed an internship in 
+        <span className="font-semibold border-transparent">
+          {' '}
+        {role}
+        {'. '}
+        </span> Throughout the
+program you demonstrated exceptional dedication, technical proficiency, and a strong
+commitment to learning and growth. Your ability to innovate, adapt, and apply creative
+solutions has been truly commendable.
+</p>
+      <p className="w-full border-transparent font-sans text-md ml-[590px] mt-[20px]">
         {leaveDate}
       </p>
       <div className="border-transparent w-full flex justify-center mt-[70px] -mb-[570px]">
