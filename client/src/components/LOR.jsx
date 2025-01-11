@@ -101,7 +101,7 @@ const LOR = () => {
         <div className="flex w-full flex-col border-white">
           <p className=" border-white">Best regards,</p>
           <div className="flex items-center mt-4 border-white">
-            <img src={signature} alt="Signature" className="w-[15vw] mr-4 border-white" />
+            <img src={signature} alt="Signature" className="w-[200px] mr-4 border-white" />
           </div>
             <div className="border-white">
               <p className="font-bold border-white">Usman Basha</p>
