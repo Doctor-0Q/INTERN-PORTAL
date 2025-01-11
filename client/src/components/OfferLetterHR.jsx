@@ -75,27 +75,28 @@ const OfferLetterHR = () => {
         
         <p className="mt-2 text-sm border-white">Dear {internName},</p>
         <p className="mt-3 text-sm border-white">
-        We are pleased to extend this offer to you for the position of Web Developer at DOC-Q. We
+        We are pleased to extend this offer to you for the position of HR Manager at DOC-Q. We
 are confident that your skills and expertise will contribute significantly to our ongoing
 projects and success.
         </p>
         
         <h4 className="mt-4 font-semibold text-sm border-white">Position Details:</h4>
         <ul className="list-disc ml-8 mt-1  text-sm border-white">
-          <li className="border-white">Title: Web Developer</li>
+          <li className="border-white">Title: HR Manager</li>
           <li className="border-white">Joining: {startDate}</li>
           <li className="border-white">Location: Remote</li>
         </ul>
 
         <h4 className="mt-4 font-semibold text-sm border-white">Responsibilities:</h4>
         <p className="mt-1 text-sm border-white">
-        In this role, you will be responsible for developing, testing, and maintaining web
-applications that align with our project goals. You will collaborate closely with the team
-to enhance user experience and functionality.
+        As an HR Manager, you will be responsible for overseeing recruitment, onboarding, and employee relations while fostering
+        a positive and inclusive work environment. You will manage performance evaluations, training programs, and compensation strategies 
+        to support employee growth and satisfaction. Additionally, you will ensure compliance with company policies and labor laws, 
+        analyze workforce trends, and align HR initiatives with organizational objectives to drive overall success.
         </p>
 
         <h4 className="mt-4 font-semibold text-sm border-white">Benefits and Growth Opportunities:</h4>
-        <p className="mt-1 text-sm border-white">
+        <p className="mt-2 text-sm border-white">
         At DOC-Q, we value growth and potential. While this is an contractual position, there are
 numerous opportunities for advancement, contingent on your performance. Here are some of
 the benefits you can expect:
@@ -117,7 +118,7 @@ innovative environment.
         </ul>
 
         
-        <p className="mt-1 text-sm border-white">
+        <p className="mt-2 text-sm border-white">
         We are excited to welcome you as an HR Manager at Docq. Your expertise will play a crucial
 role in fostering a collaborative and innovative work environment. We are confident that
 your contributions will help us achieve our goals and enhance the overall success of our
