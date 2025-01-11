@@ -51,7 +51,10 @@ const Documents = () => {
                 } else if (storedRole === "python developer" || storedRole === "python-developer") {
                     console.log("Role:", storedRole);
                     setOfferLetterPath("/view-OfferLetter-Python-Developer");
-                }else{
+                }else if (storedRole === "hr") {
+            console.log("Role:", storedRole);
+            setOfferLetterPath("/view-OfferLetter-HR");
+        }else{
                     console.log("The code isnt working")
                 }
             }
